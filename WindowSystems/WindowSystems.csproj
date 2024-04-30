@@ -18,6 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DL\apis\" />
+    <Folder Include="DL\sql\" />
     <Folder Include="model\ExternalData\" />
   </ItemGroup>
 
