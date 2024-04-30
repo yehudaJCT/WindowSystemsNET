@@ -1,22 +1,20 @@
-﻿using WindowSystems.model.DbData;
+﻿namespace WindowSystems.DL.interfaces;
+using WindowSystems.DL.API;
 
-namespace WindowSystems.DL.interfaces
+public interface IMap : ICrud<Map>
 {
-    public interface IMap
-    {
-        // Create operation
-        void CreateMap(Map map);
+    // Create operation
+    // void CreateMap(Map map);
 
-        // Read operation
-        Map GetMap(double latitude, double longitude);
+    // Read operation
+    //Map GetMap(double latitude, double longitude);
 
-        // Read all operation
-        List<Map> GetAllMap();
+    // Read all operation
+    //List<Map> GetAllMap();
 
-        // Update operation
-        void UpdateMap(Map map);
+    // Update operation
+    //void UpdateMap(Map map);
 
-        // Delete operation
-        void DeleteMap(double latitude, double longitude);
-    }
+    // Delete operation
+    //void DeleteMap(double latitude, double longitude);
 }

@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DL\apis\**" />
+    <Content Remove="DL\apis\**" />
+    <EmbeddedResource Remove="DL\apis\**" />
+    <None Remove="DL\apis\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
@@ -18,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DL\apis\" />
     <Folder Include="DL\sql\" />
     <Folder Include="model\ExternalData\" />
   </ItemGroup>
