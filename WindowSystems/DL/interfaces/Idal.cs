@@ -12,4 +12,6 @@ public interface IDal
     IMap map { get; }
 
     IWeather weather { get; }
+
+    ILocation Location { get; }
 }
