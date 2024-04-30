@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WindowSystems.DL.DO;
 
-namespace WindowSystems.DataAccess
+namespace WindowSystems.DL.sql.Context
 {
     public class WeatherDbContext : DbContext
     {
@@ -9,9 +9,8 @@ namespace WindowSystems.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=localhost;Database=master;Trusted_Connection=True;");
-
+            // Configure your connection string here
+            optionsBuilder.UseSqlServer("Server=localhost;Database=master;Trusted_Connection=True;");
         }
     }
-
 }

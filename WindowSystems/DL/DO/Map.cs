@@ -1,4 +1,4 @@
-﻿namespace WindowSystems.model.DbData
+﻿namespace WindowSystems.DL.DO
 {
     public class Map
     {
@@ -9,15 +9,10 @@
 
         public Map(double latitude, double longitude, int zoom, string Url)
         {
-            this.Latitude = latitude;
-            this.Longitude = longitude;
-            this.Zoom = zoom;
+            Latitude = latitude;
+            Longitude = longitude;
+            Zoom = zoom;
             this.Url = Url;
-        }
-
-        public override string ToString()
-        {
-            return $"Latitude: {Latitude}, Longitude: {Longitude}, Zoom: {Zoom}, URL: {Url}";
         }
     }
 }

@@ -25,8 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DL\sql\" />
-    <Folder Include="model\ExternalData\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

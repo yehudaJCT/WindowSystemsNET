@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WindowSystems.model.DbData;
+using WindowSystems.BL.BO;
 
 namespace WindowSystems.DataAccess
 {

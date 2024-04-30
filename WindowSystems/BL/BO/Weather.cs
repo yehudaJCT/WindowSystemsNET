@@ -1,4 +1,4 @@
-﻿namespace WindowSystems.model.DbData
+﻿namespace WindowSystems.BL.BO
 {
     public class Weather
     {

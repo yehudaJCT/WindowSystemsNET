@@ -1,7 +1,6 @@
 ﻿namespace WindowSystems.DL.interfaces;
 
-public interface ICrud<T> where T : struct
-{
+public interface ICrud<T> { 
     //Create,Delete,Update,Read
 
     public int Create(T entity);
