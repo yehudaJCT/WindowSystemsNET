@@ -1,26 +1,28 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WindowSystems.DL.DOApi;
+using WindowSystems.DL.DO;
 
 namespace WindowSystems.DL.SQL
 {
     public class MapRepository
     {
-        //private readonly MapDbContext _context;
+        private readonly MapDbContext _context;
 
-        //public MapRepository()
-        //{
-        //    _context = new MapDbContext();
-        //}
+        public MapRepository()
+        {
+            _context = new MapDbContext();
+        }
 
-        //public int Create(DO.Map entity)
-        //{
-        //    _context.Maps.Add(entity);
-        //    return _context.SaveChanges();
-        //}
+        public int Create(DO.Map entity)
+        {
+            SMap sMap = new SMap(entity);
+            _context.Maps.Add(sMap);
+            return _context.SaveChanges();
+        }
 
         //public DO.Map Read(DO.Map entity)
         //{
-        //    return _context.Maps.Find(entity);
+        //    SMap sMap = new SMap(entity);
+        //    return _context.Maps.Find(sMap);
         //}
 
         //public void Update(DO.Map entity)
@@ -29,16 +31,17 @@ namespace WindowSystems.DL.SQL
         //    _context.SaveChanges();
         //}
 
-        //public void Delete(DO.Map entity)
-        //{
-        //    _context.Maps.Remove(entity);
-        //    _context.SaveChanges();
-        //}
+        public void Delete(DO.Map entity)
+        {
+            SMap sMap = new SMap(entity);
+            _context.Maps.Remove(sMap);
+            _context.SaveChanges();
+        }
 
-        //public IEnumerable<DO.Map?> ReadAll(Func<DO.Map?, bool>? func = null)
+        //public IEnumerable<DO.Map?> ReadAll()
         //{
-        //    if (func != null)
-        //        return _context.Maps.Where(func).ToList();
+        //    _context.Maps.p
+        //    return _context.Maps.Where(func).ToList();
         //    return _context.Maps.ToList();
         //}
 
