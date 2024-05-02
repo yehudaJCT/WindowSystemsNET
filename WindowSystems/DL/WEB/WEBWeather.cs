@@ -12,23 +12,42 @@ public class WEBWeather
 
     public async Task<Weather> Read(Weather entity)
     {
-        string openweathermap_api_key = "df21d91a75fffd8fdbac469d792d0e69";
-        string url = $"http://api.openweathermap.org/data/2.5/forecast?lat={entity.Location.Latitude}&lon={entity.Location.Longitude}&appid={openweathermap_api_key}";
-
-        HttpResponseMessage response = await client.GetAsync(url);
-        response.EnsureSuccessStatusCode();
-        string responseBody = await response.Content.ReadAsStringAsync();
-
-        dynamic data = JsonConvert.DeserializeObject(responseBody);
-
-        Weather weather = new Weather
+        try
         {
-            Date = data.Date,
-            Temp = data.list[0].main.temp,
-            Humidity = data.list[0].main.humidity,
-            Visibility = data.list[0].visibility,
-        };
+            string openweathermap_api_key = "df21d91a75fffd8fdbac469d792d0e69";
+            string url = $"http://api.openweathermap.org/data/2.5/forecast?lat={entity.Location.Latitude}&lon={entity.Location.Longitude}&appid={openweathermap_api_key}";
 
-        return weather;
+            HttpResponseMessage response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            dynamic data = JsonConvert.DeserializeObject(responseBody);
+
+            Weather weather = new Weather
+            {
+                Location = entity.Location,
+                Date = DateTime.Parse((string)data.list[0].dt_txt),
+                Temp = (double)data.list[0].main.temp_max,
+                Humidity = (int)data.list[0].main.humidity,
+                Visibility = (int)data.list[0].visibility,
+            };
+
+            return weather;
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine($"HTTP Error: {ex.Message}");
+            throw; // Rethrow the exception for handling at a higher level
+        }
+        catch (JsonException ex)
+        {
+            Console.WriteLine($"JSON Error: {ex.Message}");
+            throw; // Rethrow the exception for handling at a higher level
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            throw; // Rethrow the exception for handling at a higher level
+        }
     }
 }

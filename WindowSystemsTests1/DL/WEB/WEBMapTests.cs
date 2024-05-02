@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using WindowSystems.DL.WEB;
 using WindowSystems.DL.DO;
 
+
 namespace WindowSystems.DL.WEB.Tests
 {
     [TestClass()]
@@ -11,17 +12,18 @@ namespace WindowSystems.DL.WEB.Tests
         [TestMethod()]
         public async Task ReadTestAsync()
         {
-
+            var WEBLocation = new WEBLocation();
             var webMap = new WEBMap();
-            var location = new Location("1600 Amphitheatre Parkway, Mountain View, CA", 37.4223, -122.084);
-            var map = new Map(location, "test", 8);
+            var address = "1600 Amphitheatre Parkway, Mountain View, CA";
+            var location = WEBLocation.Read(new DO.Location(address, 0, 0)).Result;
+            var map = new Map(location, "https://static-maps.yandex.ru/1.x/?l=map&ll=-122.084614,37.4217636&z=10&size=650,450&lang=en_US", 10);
 
             // Act
             var result = await webMap.Read(map);
 
             // Assert
-            Assert.IsNotNull(map);
-            Assert.AreEqual(map.URL, result.URL);//לא תקין
+            Assert.IsNotNull(result);
+            Assert.AreEqual(map.URL, result.URL);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using Microsoft.CodeAnalysis;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WindowSystems.DL.DO;
 
@@ -12,6 +13,7 @@ public struct Weather
 
     public Weather(Weather weather)
     {
+        Location = weather.Location;
         Date = weather.Date;
         Temp = weather.Temp;
         Humidity = weather.Humidity;

@@ -1,10 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WindowSystems.DL.WEB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using WindowSystems.DL.WEB;
 using WindowSystems.DL.DO;
 
 namespace WindowSystems.DL.WEB.Tests
@@ -15,19 +11,20 @@ namespace WindowSystems.DL.WEB.Tests
         [TestMethod()]
         public async Task ReadTestAsync()
         {
-            // Arrange
-            var WEBweather = new WEBWeather();
-            Weather weather = new Weather()
-            var location = new Location("1600 Amphitheatre Parkway, Mountain View, CA", 37.4223, -122.084);
+            var WEBLocation = new WEBLocation();
+            var webWeather = new WEBWeather();
+            var address = "1600 Amphitheatre Parkway, Mountain View, CA";
+            var location = WEBLocation.Read(new DO.Location(address, 0, 0)).Result;
+            var weather = new Weather(location, DateTime.Now, 0, 0, 0);
 
             // Act
-            var result = await WEBweather.Read(location);
+            var result = await webWeather.Read(weather);
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(37.4223, result.Latitude, 0.001);
-            Assert.AreEqual(-122.084, result.Longitude, 0.001);
-            Assert.AreEqual(location.Address, result.Address);
+            Assert.IsTrue(result.Temp > 0);
+            Assert.IsTrue(result.Humidity > 0);
+            Assert.IsTrue(result.Visibility > 0);
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
+using System.Drawing;
 using WindowSystems.DL.DO;
 using WindowSystems.DL.DOApi;
 
 namespace WindowSystems.DL.WEB;
 
-public class DalMap
+public class WEBMap
 {
     private static readonly HttpClient client = new HttpClient();
 
@@ -12,7 +13,7 @@ public class DalMap
     {
         try
         {
-            string map_url = $"https://static-maps.yandex.ru/1.x/?l=map&ll={entity.Location.Latitude},{entity.Location.Longitude}&z={entity.zoom}&size=650,450&lang=en_US";
+            string map_url = $"https://static-maps.yandex.ru/1.x/?l=map&ll={entity.Location.Longitude},{entity.Location.Latitude}&z={entity.zoom}&size=650,450&lang=en_US";
 
             HttpResponseMessage response = await client.GetAsync(map_url);
 
@@ -20,14 +21,20 @@ public class DalMap
             {
                 byte[] mapBytes = await response.Content.ReadAsByteArrayAsync();
 
-                // Save the map image
-                await File.WriteAllBytesAsync("..\\WindowSystems\\map.png", mapBytes);
+                Image mapImage;
+                // Convert byte array to Image
+                using (var ms = new MemoryStream(mapBytes))
+                {
+                    mapImage = Image.FromStream(ms);
+                    mapImage.Save("map.png", System.Drawing.Imaging.ImageFormat.Png); // Save image as PNG
+                }
 
                 Map map = new Map
                 {
                     Location = entity.Location,
                     URL = map_url,
-                    zoom = entity.zoom
+                    zoom = entity.zoom,
+                    Image = mapImage
                 };
 
                 return map;
