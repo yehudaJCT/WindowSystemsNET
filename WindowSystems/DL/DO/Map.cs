@@ -1,18 +1,23 @@
-﻿namespace WindowSystems.DL.DO
-{
-    public class Map
-    {
-        public double Latitude { get; private set; }
-        public double Longitude { get; private set; }
-        public int Zoom { get; private set; }
-        public string Url { get; private set; }
+﻿namespace WindowSystems.DL.DO;
 
-        public Map(double latitude, double longitude, int zoom, string Url)
-        {
-            Latitude = latitude;
-            Longitude = longitude;
-            Zoom = zoom;
-            this.Url = Url;
-        }
+
+public struct Map
+{
+    public Location Location { get; set; }
+    public string URL { get; set; }
+    public int zoom { get; set; }
+
+    public Map(Map map)
+    {
+        this.Location = map.Location;
+        this.URL = map.URL;
+        this.zoom = map.zoom;
     }
-}
+
+    public Map(Location location, string URL, int zoom)
+    {
+        this.Location = location;
+        this.URL = URL;
+        this.zoom = zoom;
+    }
+};

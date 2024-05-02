@@ -1,65 +1,64 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WindowSystems.DL.DO;
-using WindowSystems.DL.interfaces;
-
+using WindowSystems.DL.DOApi;
 
 namespace WindowSystems.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class WeatherController : ControllerBase
-    {
-        private readonly IWeather _weatherRepository;
+    //[Route("api/[controller]")]
+    //[ApiController]
+    //public class WeatherController : ControllerBase
+    //{
+    //    private readonly IWeather _weatherRepository;
 
-        public WeatherController(IWeather weatherRepository)
-        {
-            _weatherRepository = weatherRepository;
-        }
+    //    public WeatherController(IWeather weatherRepository)
+    //    {
+    //        _weatherRepository = weatherRepository;
+    //    }
 
-        [HttpPost]
-        public IActionResult Create(Weather weather)
-        {
-            _weatherRepository.Create(weather);
-            return Ok();
-        }
+    //    [HttpPost]
+    //    public IActionResult Create(Weather weather)
+    //    {
+    //        _weatherRepository.Create(weather);
+    //        return Ok();
+    //    }
 
-        [HttpGet("{Date}")]
-        public IActionResult Read(DateTime Date)
-        {
-            var weather = _weatherRepository.ReadObject(w => w.Date == Date);
-            if (weather == null)
-                return NotFound();
-            return Ok(weather);
-        }
+    //    [HttpGet("{Date}")]
+    //    public IActionResult Read(DateTime Date)
+    //    {
+    //        var weather = _weatherRepository.ReadObject(w => w.Date == Date);
+    //        if (weather == null)
+    //            return NotFound();
+    //        return Ok(weather);
+    //    }
 
-        [HttpPut("{Date}")]
-        public IActionResult Update(DateTime Date, Weather weather)
-        {
-            var existingWeather = _weatherRepository.ReadObject(w => w.Date == Date);
-            if (existingWeather == null)
-                return NotFound();
+    //    [HttpPut("{Date}")]
+    //    public IActionResult Update(DateTime Date, Weather weather)
+    //    {
+    //        var existingWeather = _weatherRepository.ReadObject(w => w.Date == Date);
+    //        if (existingWeather == null)
+    //            return NotFound();
 
-            weather.Date = Date;
-            _weatherRepository.Update(weather);
-            return NoContent();
-        }
+    //        weather.Date = Date;
+    //        _weatherRepository.Update(weather);
+    //        return NoContent();
+    //    }
 
-        [HttpDelete("{Date}")]
-        public IActionResult Delete(DateTime Date)
-        {
-            var existingWeather = _weatherRepository.ReadObject(w => w.Date == Date);
-            if (existingWeather == null)
-                return NotFound();
+    //    [HttpDelete("{Date}")]
+    //    public IActionResult Delete(DateTime Date)
+    //    {
+    //        var existingWeather = _weatherRepository.ReadObject(w => w.Date == Date);
+    //        if (existingWeather == null)
+    //            return NotFound();
 
-            _weatherRepository.Delete(existingWeather);
-            return NoContent();
-        }
+    //        _weatherRepository.Delete(existingWeather);
+    //        return NoContent();
+    //    }
 
-        [HttpGet]
-        public IActionResult ReadAll()
-        {
-            var allWeather = _weatherRepository.ReadAll();
-            return Ok(allWeather);
-        }
-    }
+    //    [HttpGet]
+    //    public IActionResult ReadAll()
+    //    {
+    //        var allWeather = _weatherRepository.ReadAll();
+    //        return Ok(allWeather);
+    //    }
+    //}
 }

@@ -25,6 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="BL\BLApi\" />
+    <Folder Include="BL\BlImplementation\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

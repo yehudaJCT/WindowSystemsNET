@@ -1,8 +1,7 @@
-﻿namespace WindowSystems.DL.interfaces;
+﻿namespace WindowSystems.DL.DOApi;
 
-public interface ICrud<T> { 
-    //Create,Delete,Update,Read
-
+public interface ICrud<T>
+{
     public int Create(T entity);
     public Task<T> Read(T entity);
     public void Update(T entity);

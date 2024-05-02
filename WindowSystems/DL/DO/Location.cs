@@ -1,4 +1,4 @@
-﻿namespace WindowSystems.DL.API;
+﻿namespace WindowSystems.DL.DO;
 
 public struct Location
 {
@@ -11,12 +11,5 @@ public struct Location
         this.Address = address;
         this.Latitude = latitude;
         this.Longitude = longitude;
-    }
-
-    public Location(string address)
-    {
-        this.Address = address;
-        this.Longitude=0;
-        this.Latitude = 0;
     }
 }

@@ -1,18 +1,20 @@
-﻿namespace WindowSystems.DL.DO
-{
-    public class Weather
-    {
-        public DateTime Date { get; set; }
-        public double Temperature { get; set; } // Temperature in Celsius
-        public int ChanceOfRain { get; set; } // Percentage
-        public double Visibility { get; set; } // Visibility in kilometers
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
 
-        public Weather(DateTime date, double temperature, int chanceOfRain, double visibility)
-        {
-            Date = date;
-            Temperature = temperature;
-            ChanceOfRain = chanceOfRain;
-            Visibility = visibility;
-        }
+namespace WindowSystems.DL.DO;
+
+public struct Weather
+{
+    public Location Location { get; set; }
+    public DateTime Date { get; set; }
+    public double Temp { get; set; }
+    public int Humidity { get; set; }
+    public int Visibility { get; set; }
+
+    public Weather(Weather weather)
+    {
+        Date = weather.Date;
+        Temp = weather.Temp;
+        Humidity = weather.Humidity;
+        Visibility = weather.Visibility;
     }
 }
