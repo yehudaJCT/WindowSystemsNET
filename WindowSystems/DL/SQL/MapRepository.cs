@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Principal;
 using WindowSystems.DL.DO;
+using WindowSystems.DL.SQL.model;
 
 namespace WindowSystems.DL.SQL
 {
@@ -7,51 +9,74 @@ namespace WindowSystems.DL.SQL
     {
         private readonly MapDbContext _context;
 
-        public MapRepository()
+        public MapRepository(MapDbContext context)
         {
-            _context = new MapDbContext();
+            _context = context;
         }
 
-        public int Create(DO.Map entity)
+        public int Create(int id, DO.Map entity)
         {
-            SMap sMap = new SMap(entity);
-            _context.Maps.Add(sMap);
-            return _context.SaveChanges();
-        }
-
-        //public DO.Map Read(DO.Map entity)
-        //{
-        //    SMap sMap = new SMap(entity);
-        //    return _context.Maps.Find(sMap);
-        //}
-
-        //public void Update(DO.Map entity)
-        //{
-        //    _context.Entry(entity).State = EntityState.Modified;
-        //    _context.SaveChanges();
-        //}
-
-        public void Delete(DO.Map entity)
-        {
-            SMap sMap = new SMap(entity);
-            _context.Maps.Remove(sMap);
+            var dbMap = new DbMap(id, entity);
+            _context.Maps.Add(dbMap);
             _context.SaveChanges();
+            return dbMap.id;
         }
 
-        //public IEnumerable<DO.Map?> ReadAll()
-        //{
-        //    _context.Maps.p
-        //    return _context.Maps.Where(func).ToList();
-        //    return _context.Maps.ToList();
-        //}
+        public DO.Map Read(int id)
+        {
+            var dbMap = _context.Maps.FirstOrDefault(m => m.id == id);
+            if (dbMap != null)
+            {
+                return dbMap.converter(dbMap);
+            }
+            return new Map();
+        }
 
-        //public DO.Map ReadObject(Func<DO.Map?, bool>? func)
-        //{
-        //    if (func != null)
-        //        return _context.Maps.FirstOrDefault(func);
-        //    throw new ArgumentNullException(nameof(func));
-        //}
+        public void Update(int id, DO.Map entity)
+        {
+            var dbMap = _context.Maps.FirstOrDefault(m => m.id == id);
+            if (dbMap != null)
+            {
+                dbMap.Latitude = entity.Location.Latitude;
+                dbMap.Longitude = entity.Location.Longitude;
+                dbMap.Address = entity.Location.Address;
+                dbMap.URL = entity.URL;
+                dbMap.zoom = entity.zoom;
+                _context.SaveChanges();
+            }
+        }
 
+        public void Delete(int id)
+        {
+            var dbMap = _context.Maps.FirstOrDefault(m => m.id == id);
+            if (dbMap != null)
+            {
+                _context.Maps.Remove(dbMap);
+                _context.SaveChanges();
+            }
+        }
 
+        public IEnumerable<DO.Map> ReadAll(Func<DO.Map?, bool>? func = null)
+        {
+            IQueryable<DbMap> query = _context.Maps;
+            if (func != null)
+            {
+                query = query.Where(m => func.Invoke(m.converter(m)));
+            }
+            return query.Select(m => m.converter(m)).ToList();
+        }
+
+        public DO.Map ReadObject(Func<DO.Map?, bool>? func)
+        {
+            if (func != null)
+            {
+                var dbMap = _context.Maps.FirstOrDefault(m => func.Invoke(m.converter(m)));
+                if (dbMap != null)
+                {
+                    return dbMap.converter(dbMap);
+                }
+            }
+            return new Map();
+        }
     }
 }
