@@ -2,21 +2,22 @@
 using System.Security.Principal;
 using WindowSystems.DL.DO;
 using WindowSystems.DL.SQL.model;
+using WindowSystems.DL.SQL;
 
 namespace WindowSystems.DL.SQL
 {
-    public class MapRepository
+    public class MyRepository
     {
-        private readonly MapDbContext _context;
+        private readonly MyDbContext _context;
 
-        public MapRepository(MapDbContext context)
+        public MyRepository(MyDbContext context)
         {
             _context = context;
         }
 
         public int Create(int id, DO.Map entity)
         {
-            var dbMap = new DbMap(id, entity);
+            var dbMap = new MyDb(id, entity);
             _context.Maps.Add(dbMap);
             _context.SaveChanges();
             return dbMap.id;
@@ -58,7 +59,7 @@ namespace WindowSystems.DL.SQL
 
         public IEnumerable<DO.Map> ReadAll(Func<DO.Map?, bool>? func = null)
         {
-            IQueryable<DbMap> query = _context.Maps;
+            IQueryable<MyDb> query = _context.Maps;
             if (func != null)
             {
                 query = query.Where(m => func.Invoke(m.converter(m)));

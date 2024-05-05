@@ -8,7 +8,9 @@ namespace WindowSystems.DL.SQL.Tests
     [TestClass()]
     public class MapRepositoryTests
     {
-        MapRepository mapRepository = new MapRepository(new MapDbContext());
+        MyRepository mapRepository = new MyRepository(new MyDbContext());
+
+
 
         [TestMethod()]
         public void CreateTest()
@@ -52,7 +54,10 @@ namespace WindowSystems.DL.SQL.Tests
         //[TestMethod()]
         //public void DeleteTest()
         //{
-        //    Assert.Fail();
+        //    mapRepository.Delete(1);
+        //    mapRepository.Delete(2);
+        //    mapRepository.Delete(3);
+        //    mapRepository.Delete(4);
         //}
 
         [TestMethod()]
@@ -61,10 +66,13 @@ namespace WindowSystems.DL.SQL.Tests
             var maps = mapRepository.ReadAll();
         }
 
-        //[TestMethod()]
-        //public void ReadObjectTest()
-        //{
-        //    Assert.Fail();
-        //}
+        [TestMethod()]
+        public void ReadObjectTest()
+        {
+            var location3 = new Location("10 Downing St, Westminster, London", 51.5033, -0.1276);
+            var map3 = new Map(location3, "https://static-maps.yandex.ru/1.x/?l=map&ll=-0.1276,51.5033&z=10&size=650,450&lang=en_US", 10);
+
+            DO.Map map = mapRepository.ReadObject(m => m.Value.URL == map3.URL);
+        }
     }
 }

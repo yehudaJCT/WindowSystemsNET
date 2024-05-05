@@ -4,7 +4,7 @@ using WindowSystems.DL.DO;
 
 namespace WindowSystems.DL.SQL.model
 {
-    public class DbMap
+    public class MyDb
     {
         [Key]
         public int id { get; set; }
@@ -14,12 +14,12 @@ namespace WindowSystems.DL.SQL.model
         public string URL { get; set; }
         public int zoom { get; set; }
 
-        public DbMap()
+        public MyDb()
         {
 
         }
 
-        public DbMap(int id, Map Map)
+        public MyDb(int id, Map Map)
         {
             this.id = id;
             this.Latitude = Map.Location.Latitude;
@@ -29,7 +29,7 @@ namespace WindowSystems.DL.SQL.model
             this.zoom = Map.zoom;
         }
 
-        public DbMap(int id, double latitude, double longitude, string address, string uRL, int zoom)
+        public MyDb(int id, double latitude, double longitude, string address, string uRL, int zoom)
         {
             this.id = id;
             this.Latitude = latitude;
@@ -39,7 +39,7 @@ namespace WindowSystems.DL.SQL.model
             this.zoom = zoom;
         }
 
-        public DbMap(DbMap map)
+        public MyDb(MyDb map)
         {
             this.id = map.id;
             this.Latitude = map.Latitude;
@@ -49,7 +49,7 @@ namespace WindowSystems.DL.SQL.model
             this.zoom = map.zoom;
         }
 
-        public DO.Map converter(DbMap sMap)
+        public DO.Map converter(MyDb sMap)
         {
             DO.Location location = new Location(sMap.Address, sMap.Latitude, sMap.Longitude);
             DO.Map map = new Map(location, sMap.URL, sMap.zoom);

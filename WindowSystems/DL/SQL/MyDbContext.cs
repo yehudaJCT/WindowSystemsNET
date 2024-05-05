@@ -8,9 +8,9 @@ using WindowSystems.DL.SQL.model;
 namespace WindowSystems.DL.SQL
 {
    
-    public class MapDbContext : DbContext
+    public class MyDbContext : DbContext
     {
-        public DbSet<DbMap> Maps { get; set; }
+        public DbSet<MyDb> Maps { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
