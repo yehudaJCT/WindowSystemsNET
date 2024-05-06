@@ -4,7 +4,7 @@ using WindowSystems.DL.DO;
 
 namespace WindowSystems.DL.SQL.model
 {
-    public class MyDb
+    internal class MyDb
     {
         [Key]
         public int id { get; set; }
@@ -52,7 +52,7 @@ namespace WindowSystems.DL.SQL.model
             this.zoom = map.zoom;
         }
 
-        public DO.Map converter(MyDb sMap)
+        public DO.Map NapConverter(MyDb sMap)
         {
             DO.Location location = new Location(sMap.Address, sMap.Latitude, sMap.Longitude);
             DO.Map map = new Map(location, sMap.URL, sMap.zoom);
