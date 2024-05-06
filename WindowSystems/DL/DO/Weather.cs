@@ -20,12 +20,12 @@ public struct Weather
         Visibility = weather.Visibility;
     }
 
-    public Weather(Location location, DateTime date , double temp , int humidity , int visibility)
+    public Weather(Location location, DateTime date, double temp, int humidity, int visibility)
     {
-        Location = location;
-        Date = date;
-        double Temp = temp;
-        int Humidity = humidity;
-        Visibility = visibility;
+        this.Location = location;
+        this.Date = date;
+        this.Temp = temp;
+        this.Humidity = humidity;
+        this.Visibility = visibility;
     }
 }

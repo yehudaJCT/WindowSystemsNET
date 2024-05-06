@@ -10,6 +10,11 @@ public struct Map
     public int zoom { get; set; }
     public Image? Image { get; set; }
 
+    public Map()
+    {
+
+    }
+
     public Map(Map map)
     {
         this.Location = map.Location;
@@ -23,6 +28,14 @@ public struct Map
         this.Location = location;
         this.URL = URL;
         this.zoom = zoom;
-        Image = default(Image);
+        this.Image = null;
+    }
+
+    public Map(Location location, string URL, int zoom, Image image)
+    {
+        this.Location = location;
+        this.URL = URL;
+        this.zoom = zoom;
+        this.Image = image;
     }
 };
