@@ -1,22 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Security.Principal;
+﻿using WindowSystems.DL.SQL.model;
 using WindowSystems.DL.DO;
 using WindowSystems.DL.SQL.model;
-using WindowSystems.DL.SQL;
-using WindowSystems.DL.DOApi;
 
 namespace WindowSystems.DL.SQL
 {
-    public class MapRepository 
+    public class ChatGptRepository
     {
         private readonly MyDbContext _context;
 
-        public MapRepository(MyDbContext context)
+        public ChatGptRepository(MyDbContext context)
         {
             _context = context;
         }
 
-        public int Create(DO.Map entity, int id = -1)
+        public int Create(DO.ChatGpt entity, int id = -1)
         {
             if (id == -1)
             {
@@ -43,26 +40,23 @@ namespace WindowSystems.DL.SQL
         }
 
 
-        public DO.Map Read(int id)
+        public DO.ChatGpt Read(int id)
         {
             var dbMap = _context.DB.FirstOrDefault(m => m.id == id);
             if (dbMap != null)
             {
-                return dbMap.NapConverter(dbMap);
+                return dbMap.ChatGptConverter(dbMap);
             }
-            return new Map();
+            return new DO.ChatGpt();
         }
 
-        public void Update(int id, DO.Map entity)
+        public void Update(int id, DO.ChatGpt entity)
         {
             var dbMap = _context.DB.FirstOrDefault(m => m.id == id);
             if (dbMap != null)
             {
-                dbMap.Latitude = entity.Location.Latitude;
-                dbMap.Longitude = entity.Location.Longitude;
-                dbMap.Address = entity.Location.Address;
-                dbMap.URL = entity.URL;
-                dbMap.zoom = entity.zoom;
+                dbMap.prompt = entity.prompt;
+                dbMap.responde = entity.responde;
                 _context.SaveChanges();
             }
         }
@@ -77,38 +71,38 @@ namespace WindowSystems.DL.SQL
             }
         }
 
-        public IEnumerable<DO.Map> ReadAll(Func<DO.Map, bool>? func = null)
+        public IEnumerable<DO.ChatGpt> ReadAll(Func<DO.ChatGpt, bool>? func = null)
         {
             IQueryable<MyDb> query = _context.DB;
             if (func != null)
             {
-                query = query.Where(m => func.Invoke(m.NapConverter(m)));
+                query = query.Where(m => func.Invoke(m.ChatGptConverter(m)));
             }
-            return query.Select(m => m.NapConverter(m)).ToList();
+            return query.Select(m => m.ChatGptConverter(m)).ToList();
         }
 
-        public DO.Map ReadObject(Func<DO.Map, bool>? func)
+        public DO.ChatGpt ReadObject(Func<DO.ChatGpt, bool>? func)
         {
             if (func != null)
             {
                 var allMaps = _context.DB.ToList();
 
-                var dbMap = allMaps.FirstOrDefault(m => func(m.NapConverter(m)));
+                var dbMap = allMaps.FirstOrDefault(m => func(m.ChatGptConverter(m)));
                 if (dbMap != null)
                 {
-                    return dbMap.NapConverter(dbMap);
+                    return dbMap.ChatGptConverter(dbMap);
                 }
             }
-            return new Map();
+            return new DO.ChatGpt();
         }
 
-        public int ObjectToId(Func<DO.Map, bool>? func)
+        public int ObjectToId(Func<DO.ChatGpt, bool>? func)
         {
             if (func != null)
             {
                 var allMaps = _context.DB.ToList();
 
-                var dbMap = allMaps.FirstOrDefault(m => func(m.NapConverter(m)));
+                var dbMap = allMaps.FirstOrDefault(m => func(m.ChatGptConverter(m)));
                 if (dbMap != null)
                 {
                     return dbMap.id;

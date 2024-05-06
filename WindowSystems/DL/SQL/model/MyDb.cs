@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Google.Api;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using WindowSystems.DL.DO;
 
 namespace WindowSystems.DL.SQL.model
 {
-    internal class MyDb
+    public class MyDb
     {
         [Key]
         public int id { get; set; }
@@ -17,6 +18,8 @@ namespace WindowSystems.DL.SQL.model
         public double Temp { get; set; }
         public int Humidity { get; set; }
         public int Visibility { get; set; }
+        public string prompt;
+        public string responde;
         public MyDb()
         {
 
@@ -32,14 +35,31 @@ namespace WindowSystems.DL.SQL.model
             this.zoom = Map.zoom;
         }
 
-        public MyDb(int id, double latitude, double longitude, string address, string uRL, int zoom)
+        public MyDb(int id, ChatGpt chatGpt)
         {
             this.id = id;
-            this.Latitude = latitude;
-            this.Longitude = longitude;
-            this.Address = address;
-            this.URL = uRL;
-            this.zoom = zoom;
+            this.prompt = chatGpt.prompt;
+            this.responde = chatGpt.responde;
+
+        }
+
+        public MyDb(int id, Location location)
+        {
+            this.id = id;
+            this.Address = location.Address;
+            this.Latitude = location.Latitude;
+            this.Longitude = location.Longitude;    
+        }
+
+        public MyDb(int id, Weather weather)
+        {
+            this.id = id;
+            this.Latitude = weather.Location.Latitude;
+            this.Longitude = weather.Location.Longitude;
+            this.Date = weather.Date;
+            this.Temp = weather.Temp;
+            this.Humidity = weather.Humidity;
+            this.Visibility = weather.Visibility;
         }
 
         public MyDb(MyDb map)
@@ -57,6 +77,25 @@ namespace WindowSystems.DL.SQL.model
             DO.Location location = new Location(sMap.Address, sMap.Latitude, sMap.Longitude);
             DO.Map map = new Map(location, sMap.URL, sMap.zoom);
             return map;
+        }
+
+        public DO.ChatGpt ChatGptConverter(MyDb sMap)
+        {
+            DO.ChatGpt chatGpt = new ChatGpt(sMap.prompt, sMap.responde);
+            return chatGpt;
+        }
+
+        public DO.Location LocationConverter(MyDb sMap)
+        {
+            DO.Location location = new Location(sMap.Address, sMap.Latitude, sMap.Longitude);
+            return location;
+        }
+
+        public DO.Weather WeatherConverter(MyDb sMap)
+        {
+            DO.Location location = new Location(sMap.Address, sMap.Latitude, sMap.Longitude);
+            DO.Weather weather = new Weather(location, sMap.Date, sMap.Temp, sMap.Humidity, sMap.Visibility);
+            return weather;
         }
     }
 }

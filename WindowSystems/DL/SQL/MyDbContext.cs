@@ -7,7 +7,7 @@ using WindowSystems.DL.SQL.model;
 
 namespace WindowSystems.DL.SQL
 {
-   
+
     public class MyDbContext : DbContext
     {
         public DbSet<MyDb> DB { get; set; }
