@@ -8,7 +8,7 @@ namespace WindowSystems.DL.DLImplementation;
 public class ChatGpt : IChatGpt
 {
 
-    ChatGptRepository chatGptRepository = new MapRepository(new MyDbContext());
+    ChatGptRepository chatGptRepository = new ChatGptRepository(new MyDbContext());
     WEBChatGpt chatGpt = new WEBChatGpt();
 
     public int Create(DO.ChatGpt entity)
@@ -18,13 +18,13 @@ public class ChatGpt : IChatGpt
 
     public void Delete(DO.ChatGpt entity)
     {
-        chatGptRepository.Delete(chatGptRepository.ObjectToId(m => m.URL == entity.URL));
+        chatGptRepository.Delete(chatGptRepository.ObjectToId(m => m.responde == entity.responde));
     }
 
     public async Task<DO.ChatGpt> Read(DO.ChatGpt entity)
     {
 
-        int id = chatGptRepository.ObjectToId(m => m.URL == entity.URL);
+        int id = chatGptRepository.ObjectToId(m => m.responde == entity.responde);
         if (id == -1)
         {
             entity = await chatGpt.Read(entity.prompt);
@@ -38,7 +38,7 @@ public class ChatGpt : IChatGpt
 
     public IEnumerable<DO.ChatGpt> ReadAll(Func<DO.ChatGpt, bool>? func = null)
     {
-        return new List<DO.ChatGpt?>( chatGptRepository.ReadAll(func));
+        return new List<DO.ChatGpt>(chatGptRepository.ReadAll(func));
     }
 
     public DO.ChatGpt ReadObject(Func<DO.ChatGpt, bool>? func)
@@ -48,6 +48,6 @@ public class ChatGpt : IChatGpt
 
     public void Update(DO.ChatGpt entity)
     {
-        chatGptRepository.Update(chatGptRepository.ObjectToId(m => m.URL == entity.URL), entity);
+        chatGptRepository.Update(chatGptRepository.ObjectToId(m => m.responde == entity.responde), entity);
     }
 }
