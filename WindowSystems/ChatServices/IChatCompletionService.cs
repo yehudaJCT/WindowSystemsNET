@@ -3,5 +3,5 @@ using WindowSystems.DL.DO;
 
 public interface IChatCompletionService
 {
-    Task<string> GetChatCompletionAsync(string question ,Weather weather, Location location);
+    Task<string> GetChatCompletionAsync(string question);
 }

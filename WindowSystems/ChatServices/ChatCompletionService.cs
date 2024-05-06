@@ -15,7 +15,7 @@ public class ChatCompletionService : IChatCompletionService
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<string> GetChatCompletionAsync(string question, Weather weather , Location location)
+    public async Task<string> GetChatCompletionAsync(string question)
     {
         var httpClient = _httpClientFactory.CreateClient("ChtpGPT");
 
