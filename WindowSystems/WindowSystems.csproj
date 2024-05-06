@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="DL\apis\**" />
+    <Compile Remove="Services\**" />
     <Content Remove="DL\apis\**" />
+    <Content Remove="Services\**" />
     <EmbeddedResource Remove="DL\apis\**" />
+    <EmbeddedResource Remove="Services\**" />
     <None Remove="DL\apis\**" />
+    <None Remove="Services\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +34,6 @@
   <ItemGroup>
     <Folder Include="BL\BLApi\" />
     <Folder Include="BL\BlImplementation\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using WindowSystems.DL.DOApi;
+﻿using WindowSystems.DL.DalApi;
 using WindowSystems.DL.SQL;
 using WindowSystems.DL.WEB;
 
@@ -17,41 +17,36 @@ namespace WindowSystems.DL.DLImplementation
         public void Delete(DO.Map entity)
         {
             mapRepository.Delete(mapRepository.ObjectToId(m => m.URL == entity.URL));
-            throw new NotImplementedException();
         }
 
-        public Task<DO.Map> Read(DO.Map entity)
+        public async Task<DO.Map> Read(DO.Map entity)
         {
 
             int id = mapRepository.ObjectToId(m => m.URL == entity.URL);
             if (id == -1)
             {
-                webMap.Read(entity);
+               entity = await webMap.Read(entity);
             }
             else
             { 
-                mapRepository.Read(id);
+                entity =  mapRepository.Read(id);
             }
-
-            throw new NotImplementedException();
+            return entity;
         }
 
         public IEnumerable<DO.Map> ReadAll(Func<DO.Map, bool>? func = null)
         {
-            mapRepository.ReadAll(func);
-            throw new NotImplementedException();
+            return new List<DO.Map>(mapRepository.ReadAll(func));
         }
 
         public DO.Map ReadObject(Func<DO.Map, bool>? func)
         {
-            mapRepository.ReadObject(func);
-            throw new NotImplementedException();
+            return mapRepository.ReadObject(func);
         }
 
         public void Update(DO.Map entity)
         {
             mapRepository.Update(mapRepository.ObjectToId(m => m.URL == entity.URL),entity);
-            throw new NotImplementedException();
         }
     }
 }

@@ -21,20 +21,11 @@ public class WEBMap
             {
                 byte[] mapBytes = await response.Content.ReadAsByteArrayAsync();
 
-                Image mapImage;
-                // Convert byte array to Image
-                using (var ms = new MemoryStream(mapBytes))
-                {
-                    mapImage = Image.FromStream(ms);
-                    mapImage.Save("map.png", System.Drawing.Imaging.ImageFormat.Png); // Save image as PNG
-                }
-
                 Map map = new Map
                 {
                     Location = entity.Location,
                     URL = map_url,
                     zoom = entity.zoom,
-                    Image = mapImage
                 };
 
                 return map;

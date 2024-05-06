@@ -1,4 +1,4 @@
-﻿namespace WindowSystems.DL.DOApi;
+﻿namespace WindowSystems.DL.DalApi;
 
 public interface ICrud<T>
 {

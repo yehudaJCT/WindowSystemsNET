@@ -1,5 +1,4 @@
-﻿namespace WindowSystems.DL.DO;
-
+﻿namespace WindowSystems.BL.BO;
 public struct ChatGpt
 {
     public string prompt;
