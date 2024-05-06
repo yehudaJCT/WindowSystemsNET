@@ -13,7 +13,10 @@ namespace WindowSystems.DL.SQL.model
         public string Address { get; set; }
         public string URL { get; set; }
         public int zoom { get; set; }
-
+        public DateTime Date { get; set; }
+        public double Temp { get; set; }
+        public int Humidity { get; set; }
+        public int Visibility { get; set; }
         public MyDb()
         {
 
