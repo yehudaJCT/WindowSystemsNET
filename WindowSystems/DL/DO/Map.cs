@@ -10,11 +10,6 @@ public struct Map
     public int zoom { get; set; }
     public Image? Image { get; set; }
 
-    public Map()
-    {
-
-    }
-
     public Map(Map map)
     {
         this.Location = map.Location;

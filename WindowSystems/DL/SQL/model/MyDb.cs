@@ -4,7 +4,7 @@ using WindowSystems.DL.DO;
 
 namespace WindowSystems.DL.SQL.model
 {
-    internal class MyDb
+    public class MyDb
     {
         [Key]
         public int id { get; set; }

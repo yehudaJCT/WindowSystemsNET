@@ -7,6 +7,6 @@ public interface ICrud<T>
     public void Update(T entity);
     public void Delete(T entity);
     public IEnumerable<T> ReadAll(Func<T, bool>? func = null);
-    public T ReadObject(Func<T, bool> func);
+    public T ReadObject(Func<T, bool>? func);
 
 }

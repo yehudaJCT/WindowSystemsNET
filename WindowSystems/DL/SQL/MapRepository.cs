@@ -77,7 +77,7 @@ namespace WindowSystems.DL.SQL
             }
         }
 
-        public IEnumerable<DO.Map> ReadAll(Func<DO.Map?, bool>? func = null)
+        public IEnumerable<DO.Map> ReadAll(Func<DO.Map, bool>? func = null)
         {
             IQueryable<MyDb> query = _context.DB;
             if (func != null)
@@ -87,7 +87,7 @@ namespace WindowSystems.DL.SQL
             return query.Select(m => m.NapConverter(m)).ToList();
         }
 
-        public DO.Map ReadObject(Func<DO.Map?, bool>? func)
+        public DO.Map ReadObject(Func<DO.Map, bool>? func)
         {
             if (func != null)
             {
@@ -102,7 +102,7 @@ namespace WindowSystems.DL.SQL
             return new Map();
         }
 
-        public int ObjectToId(Func<DO.Map?, bool>? func)
+        public int ObjectToId(Func<DO.Map, bool>? func)
         {
             if (func != null)
             {
