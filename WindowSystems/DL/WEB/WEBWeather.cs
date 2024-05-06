@@ -14,8 +14,9 @@ public class WEBWeather
     {
         try
         {
+            string units = "metric";
             string openweathermap_api_key = "df21d91a75fffd8fdbac469d792d0e69";
-            string url = $"http://api.openweathermap.org/data/2.5/forecast?lat={entity.Location.Latitude}&lon={entity.Location.Longitude}&appid={openweathermap_api_key}";
+            string url = $"http://api.openweathermap.org/data/2.5/forecast?lat={entity.Location.Latitude}&lon={entity.Location.Longitude}&units={units}&appid={openweathermap_api_key}";
 
             HttpResponseMessage response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();

@@ -1,7 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using OpenAI_ChatGPT;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//************************* For Chat GPT *************************************************************
+builder.Services.AddHttpClient(); // Adds the IHttpClientFactory and related services to service coll
+
+builder.Services.AddScoped<IChatCompletionService, ChatCompletionService>();
+//************************* For Chat GPT *************************************************************
 
 // Add services to the container.
 
