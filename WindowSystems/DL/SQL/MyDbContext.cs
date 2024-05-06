@@ -10,7 +10,7 @@ namespace WindowSystems.DL.SQL
    
     public class MyDbContext : DbContext
     {
-        public DbSet<MyDb> Maps { get; set; }
+        public DbSet<MyDb> DB { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
