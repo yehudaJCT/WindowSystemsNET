@@ -19,15 +19,16 @@ public class Location : ILocation
 
     public void Delete(DO.Location entity)
     {
-        locationRepository.Delete(locationRepository.ObjectToId(m => m.Address == entity.Address));
+        locationRepository.Delete(locationRepository.ObjectToId(m => m.id == entity.id));
     }
 
     public async Task<DO.Location> Read(DO.Location entity)
     {
-        int id = locationRepository.ObjectToId(m => m.Address == entity.Address);
+        int id = locationRepository.ObjectToId(m => m.id == entity.id);
         if (id == -1)
         {
             entity = await webLocation.Read(entity);
+            this.Create(entity);
         }
         else
         {
@@ -48,6 +49,7 @@ public class Location : ILocation
 
     public void Update(DO.Location entity)
     {
-        locationRepository.Update(locationRepository.ObjectToId(m => m.Address == entity.Address), entity);
+        int id = locationRepository.ObjectToId(m => m.id == entity.id);
+        locationRepository.Update(entity);
     }
 }

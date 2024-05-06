@@ -1,10 +1,12 @@
 ﻿namespace WindowSystems.BL.BO;
 public struct ChatGpt
 {
-    public string responde;
+    public string prompt { get; set; }
+    public string responde { get; set; }
 
     public ChatGpt(string prompt, string responde)
     {
+        this.prompt = prompt;
         this.responde = responde;
     }
 }

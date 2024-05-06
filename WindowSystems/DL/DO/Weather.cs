@@ -5,6 +5,7 @@ namespace WindowSystems.DL.DO;
 
 public struct Weather
 {
+    public int id { get; set; }
     public Location Location { get; set; }
     public DateTime Date { get; set; }
     public double Temp { get; set; }
@@ -22,6 +23,7 @@ public struct Weather
 
     public Weather(Location location, DateTime date, double temp, int humidity, int visibility)
     {
+        this.id = location.id;
         this.Location = location;
         this.Date = date;
         this.Temp = temp;

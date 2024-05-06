@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WindowSystems.DL.DO;
-using WindowSystems.DL.DOApi;
+﻿
 
 namespace WindowSystems.Controllers
 {

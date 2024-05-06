@@ -9,7 +9,7 @@ public class ChatGpt : IChatGpt
 {
 
     ChatGptRepository chatGptRepository = new ChatGptRepository(new MyDbContext());
-    WEBChatGpt chatGpt = new WEBChatGpt();
+    WEBChatGpt webChatGpt = new WEBChatGpt();
 
     public int Create(DO.ChatGpt entity)
     {
@@ -18,16 +18,17 @@ public class ChatGpt : IChatGpt
 
     public void Delete(DO.ChatGpt entity)
     {
-        chatGptRepository.Delete(chatGptRepository.ObjectToId(m => m.responde == entity.responde));
+        chatGptRepository.Delete(chatGptRepository.ObjectToId(m => m.id == entity.id));
     }
 
     public async Task<DO.ChatGpt> Read(DO.ChatGpt entity)
     {
 
-        int id = chatGptRepository.ObjectToId(m => m.responde == entity.responde);
+        int id = chatGptRepository.ObjectToId(m => m.id == entity.id);
         if (id == -1)
         {
-            entity = await chatGpt.Read(entity.prompt);
+            entity = await webChatGpt.Read(entity.prompt);
+            this.Create(entity);
         }
         else
         {
@@ -48,6 +49,7 @@ public class ChatGpt : IChatGpt
 
     public void Update(DO.ChatGpt entity)
     {
-        chatGptRepository.Update(chatGptRepository.ObjectToId(m => m.responde == entity.responde), entity);
+        int id = chatGptRepository.ObjectToId(m => m.id == entity.id);
+        chatGptRepository.Update(entity);
     }
 }

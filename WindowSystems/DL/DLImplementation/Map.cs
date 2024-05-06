@@ -16,13 +16,13 @@ namespace WindowSystems.DL.DLImplementation
 
         public void Delete(DO.Map entity)
         {
-            mapRepository.Delete(mapRepository.ObjectToId(m => m.URL == entity.URL));
+            mapRepository.Delete(mapRepository.ObjectToId(m => m.id == entity.id));
         }
 
         public async Task<DO.Map> Read(DO.Map entity)
         {
 
-            int id = mapRepository.ObjectToId(m => m.URL == entity.URL);
+            int id = mapRepository.ObjectToId(m => m.id == entity.id);
             if (id == -1)
             {
                entity = await webMap.Read(entity);
@@ -46,7 +46,7 @@ namespace WindowSystems.DL.DLImplementation
 
         public void Update(DO.Map entity)
         {
-            mapRepository.Update(mapRepository.ObjectToId(m => m.URL == entity.URL),entity);
+            mapRepository.Update(entity);
         }
     }
 }

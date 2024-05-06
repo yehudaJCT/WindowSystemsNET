@@ -13,7 +13,7 @@ public class WEBLocationTests
     {
         // Arrange
         var webLocation = new WEBLocation();
-        var location = new Location("1600 Amphitheatre Parkway, Mountain View, CA", 37.4223, -122.084);
+        var location = new Location(1, "1600 Amphitheatre Parkway, Mountain View, CA", 37.4223, -122.084);
 
         // Act
         var result = await webLocation.Read(location);

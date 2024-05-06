@@ -2,11 +2,13 @@
 
 public struct ChatGpt
 {
-    public string prompt;
-    public string responde;
+    public int id { get; set; }
+    public string prompt { get; set; }
+    public string responde { get; set; }
 
-    public ChatGpt(string prompt, string responde)
+    public ChatGpt(int id, string prompt, string responde)
     {
+        this.id = id;
         this.prompt = prompt;
         this.responde = responde;
     }

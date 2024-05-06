@@ -20,14 +20,26 @@ namespace WindowSystems.DL.SQL.model
         public int Visibility { get; set; }
         public string prompt;
         public string responde;
+
         public MyDb()
         {
-
+            this.id = -1;
+            this.Latitude = -1;
+            this.Longitude = -1;
+            this.Address = "";
+            this.URL = "";
+            this.zoom = -1;
+            //this.Date = ?
+            this.Temp = -1;
+            this.Humidity = -1;
+            this.Visibility = -1;
+            this.prompt = "";
+            this.responde = "";
         }
 
-        public MyDb(int id, Map Map)
+        public MyDb(Map Map)
         {
-            this.id = id;
+            this.id = Map.id;
             this.Latitude = Map.Location.Latitude;
             this.Longitude = Map.Location.Longitude;
             this.Address = Map.Location.Address;
@@ -35,25 +47,25 @@ namespace WindowSystems.DL.SQL.model
             this.zoom = Map.zoom;
         }
 
-        public MyDb(int id, ChatGpt chatGpt)
+        public MyDb(ChatGpt chatGpt)
         {
-            this.id = id;
+            this.id = chatGpt.id;
             this.prompt = chatGpt.prompt;
             this.responde = chatGpt.responde;
 
         }
 
-        public MyDb(int id, Location location)
+        public MyDb(Location location)
         {
-            this.id = id;
+            this.id = location.id;
             this.Address = location.Address;
             this.Latitude = location.Latitude;
             this.Longitude = location.Longitude;    
         }
 
-        public MyDb(int id, Weather weather)
+        public MyDb(Weather weather)
         {
-            this.id = id;
+            this.id = weather.id;
             this.Latitude = weather.Location.Latitude;
             this.Longitude = weather.Location.Longitude;
             this.Date = weather.Date;
@@ -72,28 +84,28 @@ namespace WindowSystems.DL.SQL.model
             this.zoom = map.zoom;
         }
 
-        public DO.Map NapConverter(MyDb sMap)
+        public DO.Map MapConverter(MyDb sMap)
         {
-            DO.Location location = new Location(sMap.Address, sMap.Latitude, sMap.Longitude);
+            DO.Location location = new Location(sMap.id, sMap.Address, sMap.Latitude, sMap.Longitude);
             DO.Map map = new Map(location, sMap.URL, sMap.zoom);
             return map;
         }
 
         public DO.ChatGpt ChatGptConverter(MyDb sMap)
         {
-            DO.ChatGpt chatGpt = new ChatGpt(sMap.prompt, sMap.responde);
+            DO.ChatGpt chatGpt = new ChatGpt(sMap.id, sMap.prompt, sMap.responde);
             return chatGpt;
         }
 
         public DO.Location LocationConverter(MyDb sMap)
         {
-            DO.Location location = new Location(sMap.Address, sMap.Latitude, sMap.Longitude);
+            DO.Location location = new Location(sMap.id, sMap.Address, sMap.Latitude, sMap.Longitude);
             return location;
         }
 
         public DO.Weather WeatherConverter(MyDb sMap)
         {
-            DO.Location location = new Location(sMap.Address, sMap.Latitude, sMap.Longitude);
+            DO.Location location = new Location(sMap.id, sMap.Address, sMap.Latitude, sMap.Longitude);
             DO.Weather weather = new Weather(location, sMap.Date, sMap.Temp, sMap.Humidity, sMap.Visibility);
             return weather;
         }

@@ -13,30 +13,23 @@ namespace WindowSystems.DL.SQL
             _context = context;
         }
 
-        public int Create(DO.ChatGpt entity, int id = -1)
+        public int Create(DO.ChatGpt entity)
         {
-            if (id == -1)
-            {
-                // If id is -1, assign a new id for the entity to be added to the end
-                var maxId = _context.DB.Max(m => m.id);
-                id = maxId + 1;
-            }
-
-            var existingMap = _context.DB.FirstOrDefault(m => m.id == id);
+            var existingMap = _context.DB.FirstOrDefault(m => m.id == entity.id);
 
             if (existingMap == null)
             {
                 // If no map exists at the specified ID, create a new one
-                var dbMap = new MyDb(id, entity);
+                var dbMap = new MyDb(entity);
                 _context.DB.Add(dbMap);
                 _context.SaveChanges();
             }
             else
             {
-                this.Update(id, entity);
+                this.Update(entity);
             }
 
-            return id;
+            return entity.id;
         }
 
 
@@ -50,9 +43,9 @@ namespace WindowSystems.DL.SQL
             return new DO.ChatGpt();
         }
 
-        public void Update(int id, DO.ChatGpt entity)
+        public void Update(DO.ChatGpt entity)
         {
-            var dbMap = _context.DB.FirstOrDefault(m => m.id == id);
+            var dbMap = _context.DB.FirstOrDefault(m => m.id == entity.id);
             if (dbMap != null)
             {
                 dbMap.prompt = entity.prompt;

@@ -9,11 +9,5 @@ namespace BlApi;
 
 public interface IBl
 {
-    public ILocation Location { get; }
 
-    public IMap Map { get; }
-
-    public IWeather Weather { get; }
-
-    public IChatGpt ChatGpt { get; } 
 }

@@ -14,7 +14,7 @@ public class WEBWeatherTests
         var WEBLocation = new WEBLocation();
         var webWeather = new WEBWeather();
         var address = "1600 Amphitheatre Parkway, Mountain View, CA";
-        var location = WEBLocation.Read(new DO.Location(address, 0, 0)).Result;
+        var location = WEBLocation.Read(new DO.Location(1, address, 0, 0)).Result;
         var weather = new Weather(location, DateTime.Now, 0, 0, 0);
 
         // Act

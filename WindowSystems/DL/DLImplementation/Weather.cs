@@ -17,12 +17,12 @@ public class Weather : IWeather
 
     public void Delete(DO.Weather entity)
     {
-        weatherRepository.Delete(weatherRepository.ObjectToId(m => m.Date == entity.Date));
+        weatherRepository.Delete(weatherRepository.ObjectToId(m => m.id == entity.id));
     }
 
     public async Task<DO.Weather> Read(DO.Weather entity)
     {
-        int id = weatherRepository.ObjectToId(m => m.Date == entity.Date);
+        int id = weatherRepository.ObjectToId(m => m.id == entity.id);
         if (id == -1)
         {
             entity = await webWeather.Read(entity);
@@ -46,6 +46,6 @@ public class Weather : IWeather
 
     public void Update(DO.Weather entity)
     {
-        weatherRepository.Update(weatherRepository.ObjectToId(m => m.Date == entity.Date), entity);
+        weatherRepository.Update(entity);
     }
 }
