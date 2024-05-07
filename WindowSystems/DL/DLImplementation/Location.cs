@@ -27,7 +27,7 @@ public class Location : ILocation
         int id = locationRepository.ObjectToId(m => m.id == entity.id);
         if (id == -1)
         {
-            entity = await webLocation.Read(entity);
+            entity = await webLocation.Read(entity.Address);
             this.Create(entity);
         }
         else

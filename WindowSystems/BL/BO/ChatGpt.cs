@@ -1,5 +1,5 @@
 ﻿namespace WindowSystems.BL.BO;
-public struct ChatGpt
+public class ChatGpt
 {
     public string prompt { get; set; }
     public string responde { get; set; }

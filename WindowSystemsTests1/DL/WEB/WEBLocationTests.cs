@@ -16,7 +16,7 @@ public class WEBLocationTests
         var location = new Location(1, "1600 Amphitheatre Parkway, Mountain View, CA", 37.4223, -122.084);
 
         // Act
-        var result = await webLocation.Read(location);
+        var result = await webLocation.Read(location.Address);
 
         // Assert
         Assert.IsNotNull(result);

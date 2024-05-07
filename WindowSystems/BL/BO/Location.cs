@@ -1,5 +1,5 @@
 ﻿namespace WindowSystems.BL.BO;
-public struct Location
+public class Location
 {
     public string Address { get; set; }
     public double Latitude { get; set; }
@@ -7,7 +7,10 @@ public struct Location
 
     public Location(string address, double latitude, double longitude)
     {
+        this.Address = address;
         this.Latitude = latitude;
         this.Longitude = longitude;
     }
+
+    public Location() { }
 }

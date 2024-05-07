@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlApi;
+namespace WindowSystems.BL.BLApi;
 
 public interface IBl
 {
-
+    IData data { get; }
 }

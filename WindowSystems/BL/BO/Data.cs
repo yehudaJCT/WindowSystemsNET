@@ -3,7 +3,7 @@
 namespace WindowSystems.BL.BO;
 
 
-public struct Data
+public class Data
 {
     public string URL { get; set; }
 

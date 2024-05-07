@@ -4,8 +4,9 @@ namespace WindowSystems.BL.BLApi
 {
     public interface IData
     {
-        public Data GetData(double lon, double lat, DateTime dateTime);
+        public bool IsALocation(string address);
 
+        public Data GetData(string address, DateTime dateTime);
 
         public ChatGpt GetResponde(string URL, string Prompt);
 

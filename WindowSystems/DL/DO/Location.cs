@@ -14,4 +14,9 @@ public struct Location
         this.Latitude = latitude;
         this.Longitude = longitude;
     }
+
+    public Location(string address)
+    {
+        this.Address = address;
+    }
 }
