@@ -9,4 +9,6 @@ public class ChatGpt
         this.prompt = prompt;
         this.responde = responde;
     }
+
+    public ChatGpt() { }
 }

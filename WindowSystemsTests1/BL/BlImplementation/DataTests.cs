@@ -30,20 +30,27 @@ namespace WindowSystems.BL.BlImplementation.Tests
         public void GetDataTest()
         {
             IBl bl = new Bl();
-            var v = bl.data.GetData("Jerusalem", 12,5);
-            //Assert.Fail();
+            var v = bl.data.GetData("Jerusalem", 12, 5);
         }
 
-        //[TestMethod()]
-        //public void GetRespondeTest()
-        //{
-        //    Assert.Fail();
-        //}
+        [TestMethod()]
+        public void DeleteTest()
+        {
+            IBl bl = new Bl();
+            bl.data.Delete(2);
 
-        //[TestMethod()]
-        //public void validateAddressTest()
-        //{
-        //    Assert.Fail();
-        //}
+        }
+
+        [TestMethod()]
+        public void GetRespondeTest()
+        {
+            IBl bl = new Bl();
+
+            var v = bl.data.GetData("Jerusalem", 12, 1);
+
+            bl.data.GetResponde(1, "promt test");
+        }
+
+
     }
 }

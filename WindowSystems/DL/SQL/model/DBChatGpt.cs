@@ -1,17 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WindowSystems.DL.SQL.model;
 using WindowSystems.DL.DO;
 
-namespace WindowSystems.SQL.model;
+namespace WindowSystems.DL.SQL.model;
 
 public class DBChatGpt
 {
     [Key]
     public int id { get; set; }
-    public string prompt { get; set; }
-    public string responde { get; set; }
+    public string prompt;
+    public string responde;
 
+    DBChatGpt()
+    {
 
+    }
 
     public DBChatGpt(ChatGpt chatGpt)
     {

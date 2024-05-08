@@ -1,5 +1,4 @@
 ﻿using WindowSystems.DL.SQL.model;
-using WindowSystems.SQL.model;
 
 namespace WindowSystems.DL.SQL
 {

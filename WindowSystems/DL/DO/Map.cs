@@ -14,6 +14,7 @@ public struct Map
     {
         this.id = location.id;
         this.Location = location;
+        this.URL = URL;
         this.zoom = zoom;
     }
 

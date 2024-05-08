@@ -2,15 +2,20 @@
 using WindowSystems.DL.SQL.model;
 using WindowSystems.DL.DO;
 
-namespace WindowSystems.SQL.model;
+namespace WindowSystems.DL.SQL.model;
 
 public class DBLocation
 {
     [Key]
     public int id { get; set; }
-    public string Address { get; set; }
+    public string Address;
     public double Latitude { get; set; }
     public double Longitude { get; set; }
+
+    DBLocation()
+    {
+
+    }
 
     public DBLocation(Location location)
     {

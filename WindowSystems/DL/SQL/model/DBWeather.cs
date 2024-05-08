@@ -1,9 +1,8 @@
-﻿using Microsoft.CodeAnalysis;
+﻿
 using System.ComponentModel.DataAnnotations;
 using WindowSystems.DL.DO;
-using WindowSystems.DL.SQL;
 
-namespace WindowSystems.SQL.model;
+namespace WindowSystems.DL.SQL.model;
 
 public class DBWeather
 {
@@ -13,6 +12,11 @@ public class DBWeather
     public double Temp { get; set; }
     public int Humidity { get; set; }
     public int Visibility { get; set; }
+
+    DBWeather()
+    {
+
+    }
 
     public DBWeather(Weather weather)
     {

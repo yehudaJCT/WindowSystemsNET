@@ -14,7 +14,15 @@ namespace WindowSystems.BL.BlImplementation
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            DL.DO.ChatGpt chatGpt = dal.chatGpt.ReadObject(m => m.id == id);
+            DL.DO.Location location = dal.location.ReadObject(m => m.id == id);
+            DL.DO.Weather weather = dal.weather.ReadObject(m => m.id == id);
+            DL.DO.Map map = dal.map.ReadObject(m => m.id == id);
+
+            dal.chatGpt.Delete(chatGpt);
+            dal.location.Delete(location);
+            dal.weather.Delete(weather);
+            dal.map.Delete(map);
         }
 
         public IEnumerable<BO.Data> getAllItems()
@@ -99,7 +107,15 @@ namespace WindowSystems.BL.BlImplementation
 
         public BO.ChatGpt GetResponde(int id, string Prompt)
         {
-            throw new NotImplementedException();
+            var c = dal.chatGpt.Read(new DL.DO.ChatGpt(id, Prompt));
+
+            BO.ChatGpt chatGpt = new BO.ChatGpt
+            {
+                prompt = Prompt,
+                responde = c.Result.responde
+            };
+
+            return chatGpt;
         }
 
         public bool validateAddress(string address)

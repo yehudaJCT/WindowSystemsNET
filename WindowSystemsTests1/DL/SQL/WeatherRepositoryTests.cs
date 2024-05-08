@@ -11,17 +11,6 @@ namespace WindowSystems.DL.SQL.Tests
     [TestClass()]
     public class WeatherRepositoryTests
     {
-        [TestMethod()]
-        public void WeatherRepositoryTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void CreateTest()
-        {
-            Assert.Fail();
-        }
 
         [TestMethod()]
         public void ReadTest()
@@ -29,34 +18,34 @@ namespace WindowSystems.DL.SQL.Tests
             Assert.Fail();
         }
 
-        [TestMethod()]
-        public void UpdateTest()
-        {
-            Assert.Fail();
-        }
+    //    [TestMethod()]
+    //    public void UpdateTest()
+    //    {
+    //        Assert.Fail();
+    //    }
 
-        [TestMethod()]
-        public void DeleteTest()
-        {
-            Assert.Fail();
-        }
+    //    [TestMethod()]
+    //    public void DeleteTest()
+    //    {
+    //        Assert.Fail();
+    //    }
 
-        [TestMethod()]
-        public void ReadAllTest()
-        {
-            Assert.Fail();
-        }
+    //    [TestMethod()]
+    //    public void ReadAllTest()
+    //    {
+    //        Assert.Fail();
+    //    }
 
-        [TestMethod()]
-        public void ReadObjectTest()
-        {
-            Assert.Fail();
-        }
+    //    [TestMethod()]
+    //    public void ReadObjectTest()
+    //    {
+    //        Assert.Fail();
+    //    }
 
-        [TestMethod()]
-        public void ObjectToIdTest()
-        {
-            Assert.Fail();
-        }
+    //    [TestMethod()]
+    //    public void ObjectToIdTest()
+    //    {
+    //        Assert.Fail();
+    //    }
     }
 }
