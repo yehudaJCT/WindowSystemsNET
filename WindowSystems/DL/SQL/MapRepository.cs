@@ -70,13 +70,19 @@ namespace WindowSystems.DL.SQL
 
         public IEnumerable<DO.Map> ReadAll(Func<DO.Map, bool>? func = null)
         {
-            IQueryable<DBMap> query = _context.Map;
+            IEnumerable<DBMap> query = _context.Map;
+
+            if (query.Count() <= 0)
+            {
+                return Enumerable.Empty<DO.Map>();
+            }
+
             LocationRepository locationRepository = new LocationRepository(_context);//?
             if (func != null)
             {
                 query = query.Where(m => func.Invoke(m.MapConverter(m, locationRepository.Read(m.id))));
             }
-            return query.Select(m => m.MapConverter(m, locationRepository.Read(m.id))).ToList();
+            return query.Select(m => m.MapConverter(m, locationRepository.Read(m.id)));
         }
 
         public DO.Map ReadObject(Func<DO.Map, bool>? func)

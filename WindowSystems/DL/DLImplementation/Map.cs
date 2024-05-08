@@ -37,7 +37,7 @@ namespace WindowSystems.DL.DLImplementation
 
         public IEnumerable<DO.Map> ReadAll(Func<DO.Map, bool>? func = null)
         {
-            return new List<DO.Map>(mapRepository.ReadAll(func));
+            return mapRepository.ReadAll(func);
         }
 
         public DO.Map ReadObject(Func<DO.Map, bool>? func)

@@ -65,12 +65,18 @@ namespace WindowSystems.DL.SQL
 
         public IEnumerable<DO.Location> ReadAll(Func<DO.Location, bool>? func = null)
         {
-            IQueryable<DBLocation> query = _context.Location;
+            IEnumerable<DBLocation> query = _context.Location;
+
+            if (query.Count() <= 0)
+            {
+                return Enumerable.Empty<DO.Location>();
+            }
+
             if (func != null)
             {
                 query = query.Where(m => func.Invoke(m.LocationConverter(m)));
             }
-            return query.Select(m => m.LocationConverter(m)).ToList();
+            return query.Select(m => m.LocationConverter(m));
         }
 
         public DO.Location ReadObject(Func<DO.Location, bool>? func)

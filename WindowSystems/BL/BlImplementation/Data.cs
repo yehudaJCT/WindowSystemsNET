@@ -120,7 +120,19 @@ namespace WindowSystems.BL.BlImplementation
 
         public bool validateAddress(string address)
         {
-            throw new NotImplementedException();
+            var locations = dal.location.ReadAll(m => m.Address == address);
+            if(locations.Count() > 0)
+            {
+                return true;
+            }
+
+            var location = dal.location.Read(new DL.DO.Location(-1, address));
+            if (location.Result.Latitude != 0 && location.Result.Latitude != 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

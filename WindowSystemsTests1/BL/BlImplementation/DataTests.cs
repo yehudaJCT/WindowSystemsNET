@@ -30,7 +30,7 @@ namespace WindowSystems.BL.BlImplementation.Tests
         public void GetDataTest()
         {
             IBl bl = new Bl();
-            var v = bl.data.GetData("Jerusalem", 12, 5);
+            var v = bl.data.GetData("Jerusalem", 8, 5);
         }
 
         [TestMethod()]
@@ -46,11 +46,19 @@ namespace WindowSystems.BL.BlImplementation.Tests
         {
             IBl bl = new Bl();
 
-            var v = bl.data.GetData("Jerusalem", 12, 1);
+            var v = bl.data.GetData("1600 Amphitheatre Parkway, Mountain View, CA", 8, 1);
 
             bl.data.GetResponde(1, "promt test");
         }
 
+        [TestMethod()]
+        public void validateAddressTest()
+        {
+            IBl bl = new Bl();
 
+            var v1 = bl.data.validateAddress("Jerusalem");
+
+            var v2 = bl.data.validateAddress("c8936cge9");
+        }
     }
 }

@@ -39,7 +39,7 @@ public class ChatGpt : IChatGpt
 
     public IEnumerable<DO.ChatGpt> ReadAll(Func<DO.ChatGpt, bool>? func = null)
     {
-        return new List<DO.ChatGpt>(chatGptRepository.ReadAll(func));
+        return chatGptRepository.ReadAll(func);
     }
 
     public DO.ChatGpt ReadObject(Func<DO.ChatGpt, bool>? func)

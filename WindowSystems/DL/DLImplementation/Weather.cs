@@ -37,7 +37,7 @@ public class Weather : IWeather
 
     public IEnumerable<DO.Weather> ReadAll(Func<DO.Weather, bool>? func = null)
     {
-        return new List<DO.Weather>(weatherRepository.ReadAll(func));
+        return weatherRepository.ReadAll(func);
     }
 
     public DO.Weather ReadObject(Func<DO.Weather, bool>? func)

@@ -13,6 +13,12 @@ public class WEBLocation
         string url = $"https://us1.locationiq.com/v1/search.php?key={LocationIQ_api_key}&q={Uri.EscapeDataString(location.Address)}&format=json";
 
         HttpResponseMessage response = await client.GetAsync(url);
+
+        if(!response.IsSuccessStatusCode)
+        {
+            return new Location();
+        }
+
         response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
 

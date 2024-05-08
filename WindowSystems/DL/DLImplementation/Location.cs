@@ -39,7 +39,7 @@ public class Location : ILocation
 
     public IEnumerable<DO.Location> ReadAll(Func<DO.Location, bool>? func = null)
     {
-        return new List<DO.Location>(locationRepository.ReadAll(func));
+        return locationRepository.ReadAll(func);
     }
 
     public DO.Location ReadObject(Func<DO.Location, bool>? func)

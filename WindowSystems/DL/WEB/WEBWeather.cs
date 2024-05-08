@@ -18,6 +18,12 @@ public class WEBWeather
             string url = $"http://api.openweathermap.org/data/2.5/forecast?lat={entity.Location.Latitude}&lon={entity.Location.Longitude}&units={units}&appid={openweathermap_api_key}";
 
             HttpResponseMessage response = await client.GetAsync(url);
+
+            if(!response.IsSuccessStatusCode)
+            {
+                return new Weather();
+            }
+
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 

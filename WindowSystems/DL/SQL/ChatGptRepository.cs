@@ -64,12 +64,18 @@ namespace WindowSystems.DL.SQL
 
         public IEnumerable<DO.ChatGpt> ReadAll(Func<DO.ChatGpt, bool>? func = null)
         {
-            IQueryable<DBChatGpt> query = _context.ChatGpt;
+            IEnumerable<DBChatGpt> query = _context.ChatGpt;
+
+            if (query.Count() <= 0)
+            {
+                return Enumerable.Empty<DO.ChatGpt>();
+            }
+
             if (func != null)
             {
                 query = query.Where(m => func.Invoke(m.ChatGptConverter(m)));
             }
-            return query.Select(m => m.ChatGptConverter(m)).ToList();
+            return query.Select(m => m.ChatGptConverter(m));
         }
 
         public DO.ChatGpt ReadObject(Func<DO.ChatGpt, bool>? func)

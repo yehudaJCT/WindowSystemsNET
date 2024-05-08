@@ -68,13 +68,19 @@ namespace WindowSystems.DL.SQL
 
         public IEnumerable<DO.Weather> ReadAll(Func<DO.Weather, bool>? func = null)
         {
-            IQueryable<DBWeather> query = _context.Weather;
+            IEnumerable<DBWeather> query = _context.Weather;
+
+            if (query.Count() <= 0)
+            {
+                return Enumerable.Empty<DO.Weather>();
+            }
+
             LocationRepository locationRepository = new LocationRepository(_context);//?
             if (func != null)
             {
                 query = query.Where(m => func.Invoke(m.WeatherConverter(m, locationRepository.Read(m.id))));
             }
-            return query.Select(m => m.WeatherConverter(m, locationRepository.Read(m.id))).ToList();
+            return query.Select(m => m.WeatherConverter(m, locationRepository.Read(m.id)));
         }
 
         public DO.Weather ReadObject(Func<DO.Weather, bool>? func)
