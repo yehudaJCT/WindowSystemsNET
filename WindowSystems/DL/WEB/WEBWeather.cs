@@ -23,14 +23,8 @@ public class WEBWeather
 
             dynamic data = JsonConvert.DeserializeObject(responseBody);
 
-            Weather weather = new Weather
-            {
-                Location = entity.Location,
-                Date = DateTime.Parse((string)data.list[0].dt_txt),
-                Temp = (double)data.list[0].main.temp_max,
-                Humidity = (int)data.list[0].main.humidity,
-                Visibility = (int)data.list[0].visibility,
-            };
+            Weather weather = new Weather(entity.Location, DateTime.Parse((string)data.list[0].dt_txt), (double)data.list[0].main.temp_max, (int)data.list[0].main.humidity, (int)data.list[0].visibility);
+
 
             return weather;
         }

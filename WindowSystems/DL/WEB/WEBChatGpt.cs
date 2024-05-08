@@ -8,14 +8,11 @@ public class WEBChatGpt
 {
     private readonly IChatCompletionService _chatCompletionService;
 
-    public async Task<WindowSystems.DL.DO.ChatGpt> Read(string prompt)
+    public async Task<WindowSystems.DL.DO.ChatGpt> Read(ChatGpt chatGpt)
     {
-        var response = await _chatCompletionService.GetChatCompletionAsync(prompt);
-        return new WindowSystems.DL.DO.ChatGpt
-        {
-            prompt = prompt,
-            responde = response
-        };
+        var response = await _chatCompletionService.GetChatCompletionAsync(chatGpt.prompt);
+        return new WindowSystems.DL.DO.ChatGpt(chatGpt.id, chatGpt.prompt, response);
+
     }
 }
 

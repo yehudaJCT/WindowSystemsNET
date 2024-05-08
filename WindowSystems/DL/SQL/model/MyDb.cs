@@ -9,15 +9,15 @@ namespace WindowSystems.DL.SQL.model
     {
         [Key]
         public int id { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        public string Address { get; set; }
-        public string URL { get; set; }
-        public int zoom { get; set; }
-        public DateTime Date { get; set; }
-        public double Temp { get; set; }
-        public int Humidity { get; set; }
-        public int Visibility { get; set; }
+        public double Latitude;
+        public double Longitude;
+        public string Address;
+        public string URL;
+        public int zoom;
+        public DateTime Date;
+        public double Temp;
+        public int Humidity;
+        public int Visibility;
         public string prompt;
         public string responde;
 

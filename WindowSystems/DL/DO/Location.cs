@@ -2,10 +2,10 @@
 
 public struct Location
 {
-    public int id { get; set; }
-    public string Address { get; set; }
-    public double Latitude { get; set; }
-    public double Longitude { get; set; }
+    public int id { get; }
+    public string Address { get; }
+    public double Latitude { get; }
+    public double Longitude { get; }
 
     public Location(int id, string address, double latitude, double longitude)
     {
@@ -15,8 +15,10 @@ public struct Location
         this.Longitude = longitude;
     }
 
-    public Location(string address)
+    public Location(int id, string address)
     {
+        this.id = id;
         this.Address = address;
     }
+
 }

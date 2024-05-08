@@ -26,6 +26,7 @@ public class Weather : IWeather
         if (id == -1)
         {
             entity = await webWeather.Read(entity);
+            this.Create(entity);
         }
         else
         {

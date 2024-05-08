@@ -1,6 +1,7 @@
 ﻿using WindowSystems.DL.SQL.model;
 using WindowSystems.DL.DO;
 using WindowSystems.DL.SQL.model;
+using WindowSystems.SQL.model;
 
 namespace WindowSystems.DL.SQL
 {
@@ -15,13 +16,13 @@ namespace WindowSystems.DL.SQL
 
         public int Create(DO.ChatGpt entity)
         {
-            var existingMap = _context.DB.FirstOrDefault(m => m.id == entity.id);
+            var existingMap = _context.ChatGpt.FirstOrDefault(m => m.id == entity.id);
 
             if (existingMap == null)
             {
                 // If no map exists at the specified ID, create a new one
-                var dbMap = new MyDb(entity);
-                _context.DB.Add(dbMap);
+                var dbMap = new DBChatGpt(entity);
+                _context.ChatGpt.Add(dbMap);
                 _context.SaveChanges();
             }
             else
@@ -35,7 +36,7 @@ namespace WindowSystems.DL.SQL
 
         public DO.ChatGpt Read(int id)
         {
-            var dbMap = _context.DB.FirstOrDefault(m => m.id == id);
+            var dbMap = _context.ChatGpt.FirstOrDefault(m => m.id == id);
             if (dbMap != null)
             {
                 return dbMap.ChatGptConverter(dbMap);
@@ -45,7 +46,7 @@ namespace WindowSystems.DL.SQL
 
         public void Update(DO.ChatGpt entity)
         {
-            var dbMap = _context.DB.FirstOrDefault(m => m.id == entity.id);
+            var dbMap = _context.ChatGpt.FirstOrDefault(m => m.id == entity.id);
             if (dbMap != null)
             {
                 dbMap.prompt = entity.prompt;
@@ -56,17 +57,17 @@ namespace WindowSystems.DL.SQL
 
         public void Delete(int id)
         {
-            var dbMap = _context.DB.FirstOrDefault(m => m.id == id);
+            var dbMap = _context.ChatGpt.FirstOrDefault(m => m.id == id);
             if (dbMap != null)
             {
-                _context.DB.Remove(dbMap);
+                _context.ChatGpt.Remove(dbMap);
                 _context.SaveChanges();
             }
         }
 
         public IEnumerable<DO.ChatGpt> ReadAll(Func<DO.ChatGpt, bool>? func = null)
         {
-            IQueryable<MyDb> query = _context.DB;
+            IQueryable<DBChatGpt> query = _context.ChatGpt;
             if (func != null)
             {
                 query = query.Where(m => func.Invoke(m.ChatGptConverter(m)));
@@ -78,7 +79,7 @@ namespace WindowSystems.DL.SQL
         {
             if (func != null)
             {
-                var allMaps = _context.DB.ToList();
+                var allMaps = _context.ChatGpt.ToList();
 
                 var dbMap = allMaps.FirstOrDefault(m => func(m.ChatGptConverter(m)));
                 if (dbMap != null)
@@ -93,7 +94,7 @@ namespace WindowSystems.DL.SQL
         {
             if (func != null)
             {
-                var allMaps = _context.DB.ToList();
+                var allMaps = _context.ChatGpt.ToList();
 
                 var dbMap = allMaps.FirstOrDefault(m => func(m.ChatGptConverter(m)));
                 if (dbMap != null)

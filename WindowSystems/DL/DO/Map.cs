@@ -5,17 +5,22 @@ namespace WindowSystems.DL.DO;
 
 public struct Map
 {
-    public int id { get; set; }
-    public Location Location { get; set; }
-    public string URL { get; set; }
-    public int zoom { get; set; }
-
+    public int id { get; }
+    public Location Location { get; }
+    public string URL { get; }
+    public int zoom { get; }
 
     public Map(Location location, string URL, int zoom)
     {
         this.id = location.id;
         this.Location = location;
-        this.URL = URL;
+        this.zoom = zoom;
+    }
+
+    public Map(Location location, int zoom)
+    {
+        this.id = location.id;
+        this.Location = location;
         this.zoom = zoom;
     }
 

@@ -21,12 +21,8 @@ public class WEBMap
             {
                 byte[] mapBytes = await response.Content.ReadAsByteArrayAsync();
 
-                Map map = new Map
-                {
-                    Location = entity.Location,
-                    URL = map_url,
-                    zoom = entity.zoom,
-                };
+                Map map = new Map(entity.Location, map_url, entity.zoom);
+
 
                 return map;
             }

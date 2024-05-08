@@ -1,4 +1,5 @@
 ﻿using WindowSystems.DL.SQL.model;
+using WindowSystems.SQL.model;
 
 namespace WindowSystems.DL.SQL
 {
@@ -13,13 +14,13 @@ namespace WindowSystems.DL.SQL
 
         public int Create(DO.Weather entity)
         {
-            var existingMap = _context.DB.FirstOrDefault(m => m.id == entity.id);
+            var existingMap = _context.Weather.FirstOrDefault(m => m.id == entity.id);
 
             if (existingMap == null)
             {
                 // If no map exists at the specified ID, create a new one
-                var dbMap = new MyDb(entity);
-                _context.DB.Add(dbMap);
+                var dbMap = new DBWeather(entity);
+                _context.Weather.Add(dbMap);
                 _context.SaveChanges();
             }
             else
@@ -33,22 +34,21 @@ namespace WindowSystems.DL.SQL
 
         public DO.Weather Read(int id)
         {
-            var dbMap = _context.DB.FirstOrDefault(m => m.id == id);
+            var dbMap = _context.Weather.FirstOrDefault(m => m.id == id);
             if (dbMap != null)
             {
-                return dbMap.WeatherConverter(dbMap);
+                LocationRepository locationRepository = new LocationRepository(_context);//?
+                DO.Location location = locationRepository.Read(id);
+                return dbMap.WeatherConverter(dbMap, location);
             }
             return new DO.Weather();
         }
 
         public void Update(DO.Weather entity)
         {
-            var dbMap = _context.DB.FirstOrDefault(m => m.id == entity.id);
+            var dbMap = _context.Weather.FirstOrDefault(m => m.id == entity.id);
             if (dbMap != null)
             {
-                dbMap.Latitude = entity.Location.Latitude;
-                dbMap.Longitude = entity.Location.Longitude;
-                dbMap.Address = entity.Location.Address;
                 dbMap.Date = entity.Date;
                 dbMap.Temp = entity.Temp;   
                 dbMap.Humidity = entity.Humidity;   
@@ -59,34 +59,35 @@ namespace WindowSystems.DL.SQL
 
         public void Delete(int id)
         {
-            var dbMap = _context.DB.FirstOrDefault(m => m.id == id);
+            var dbMap = _context.Weather.FirstOrDefault(m => m.id == id);
             if (dbMap != null)
             {
-                _context.DB.Remove(dbMap);
+                _context.Weather.Remove(dbMap);
                 _context.SaveChanges();
             }
         }
 
         public IEnumerable<DO.Weather> ReadAll(Func<DO.Weather, bool>? func = null)
         {
-            IQueryable<MyDb> query = _context.DB;
+            IQueryable<DBWeather> query = _context.Weather;
+            LocationRepository locationRepository = new LocationRepository(_context);//?
             if (func != null)
             {
-                query = query.Where(m => func.Invoke(m.WeatherConverter(m)));
+                query = query.Where(m => func.Invoke(m.WeatherConverter(m, locationRepository.Read(m.id))));
             }
-            return query.Select(m => m.WeatherConverter(m)).ToList();
+            return query.Select(m => m.WeatherConverter(m, locationRepository.Read(m.id))).ToList();
         }
 
         public DO.Weather ReadObject(Func<DO.Weather, bool>? func)
         {
             if (func != null)
             {
-                var allMaps = _context.DB.ToList();
-
-                var dbMap = allMaps.FirstOrDefault(m => func(m.WeatherConverter(m)));
+                var allMaps = _context.Weather.ToList();
+                LocationRepository locationRepository = new LocationRepository(_context);//?
+                var dbMap = allMaps.FirstOrDefault(m => func(m.WeatherConverter(m, locationRepository.Read(m.id))));
                 if (dbMap != null)
                 {
-                    return dbMap.WeatherConverter(dbMap);
+                    return dbMap.WeatherConverter(dbMap, locationRepository.Read(dbMap.id));
                 }
             }
             return new DO.Weather();
@@ -96,9 +97,9 @@ namespace WindowSystems.DL.SQL
         {
             if (func != null)
             {
-                var allMaps = _context.DB.ToList();
-
-                var dbMap = allMaps.FirstOrDefault(m => func(m.WeatherConverter(m)));
+                var allMaps = _context.Weather.ToList();
+                LocationRepository locationRepository = new LocationRepository(_context);//?
+                var dbMap = allMaps.FirstOrDefault(m => func(m.WeatherConverter(m, locationRepository.Read(m.id))));
                 if (dbMap != null)
                 {
                     return dbMap.id;

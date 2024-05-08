@@ -1,4 +1,5 @@
 ﻿using WindowSystems.DL.SQL.model;
+using WindowSystems.SQL.model;
 
 namespace WindowSystems.DL.SQL
 {
@@ -13,13 +14,13 @@ namespace WindowSystems.DL.SQL
 
         public int Create(DO.Location entity)
         {
-            var existingMap = _context.DB.FirstOrDefault(m => m.id == entity.id);
+            var existingMap = _context.Location.FirstOrDefault(m => m.id == entity.id);
 
             if (existingMap == null)
             {
                 // If no map exists at the specified ID, create a new one
-                var dbMap = new MyDb(entity);
-                _context.DB.Add(dbMap);
+                var dbMap = new DBLocation(entity);
+                _context.Location.Add(dbMap);
                 _context.SaveChanges();
             }
             else
@@ -33,7 +34,7 @@ namespace WindowSystems.DL.SQL
 
         public DO.Location Read(int id)
         {
-            var dbMap = _context.DB.FirstOrDefault(m => m.id == id);
+            var dbMap = _context.Location.FirstOrDefault(m => m.id == id);
             if (dbMap != null)
             {
                 return dbMap.LocationConverter(dbMap);
@@ -43,7 +44,7 @@ namespace WindowSystems.DL.SQL
 
         public void Update(DO.Location entity)
         {
-            var dbMap = _context.DB.FirstOrDefault(m => m.id == entity.id);
+            var dbMap = _context.Location.FirstOrDefault(m => m.id == entity.id);
             if (dbMap != null)
             {
                 dbMap.Address = entity.Address;
@@ -55,17 +56,17 @@ namespace WindowSystems.DL.SQL
 
         public void Delete(int id)
         {
-            var dbMap = _context.DB.FirstOrDefault(m => m.id == id);
+            var dbMap = _context.Location.FirstOrDefault(m => m.id == id);
             if (dbMap != null)
             {
-                _context.DB.Remove(dbMap);
+                _context.Location.Remove(dbMap);
                 _context.SaveChanges();
             }
         }
 
         public IEnumerable<DO.Location> ReadAll(Func<DO.Location, bool>? func = null)
         {
-            IQueryable<MyDb> query = _context.DB;
+            IQueryable<DBLocation> query = _context.Location;
             if (func != null)
             {
                 query = query.Where(m => func.Invoke(m.LocationConverter(m)));
@@ -77,7 +78,7 @@ namespace WindowSystems.DL.SQL
         {
             if (func != null)
             {
-                var allMaps = _context.DB.ToList();
+                var allMaps = _context.Location.ToList();
 
                 var dbMap = allMaps.FirstOrDefault(m => func(m.LocationConverter(m)));
                 if (dbMap != null)
@@ -92,7 +93,7 @@ namespace WindowSystems.DL.SQL
         {
             if (func != null)
             {
-                var allMaps = _context.DB.ToList();
+                var allMaps = _context.Location.ToList();
 
                 var dbMap = allMaps.FirstOrDefault(m => func(m.LocationConverter(m)));
                 if (dbMap != null)

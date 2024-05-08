@@ -25,7 +25,8 @@ namespace WindowSystems.DL.DLImplementation
             int id = mapRepository.ObjectToId(m => m.id == entity.id);
             if (id == -1)
             {
-               entity = await webMap.Read(entity);
+                entity = await webMap.Read(entity);
+                this.Create(entity);
             }
             else
             { 

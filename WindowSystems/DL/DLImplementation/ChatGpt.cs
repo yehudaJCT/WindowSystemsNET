@@ -27,7 +27,7 @@ public class ChatGpt : IChatGpt
         int id = chatGptRepository.ObjectToId(m => m.id == entity.id);
         if (id == -1)
         {
-            entity = await webChatGpt.Read(entity.prompt);
+            entity = await webChatGpt.Read(entity);
             this.Create(entity);
         }
         else
