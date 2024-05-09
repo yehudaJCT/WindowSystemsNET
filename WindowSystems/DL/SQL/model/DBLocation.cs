@@ -8,7 +8,9 @@ public class DBLocation
 {
     [Key]
     public int id { get; set; }
-    public string Address;
+
+    [StringLength(255)]
+    public string Address { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }
 

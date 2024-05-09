@@ -16,7 +16,7 @@ public class WEBLocation
 
         if(!response.IsSuccessStatusCode)
         {
-            return new Location();
+            return new Location(-1,"null",1000,1000);
         }
 
         response.EnsureSuccessStatusCode();

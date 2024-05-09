@@ -98,9 +98,9 @@ namespace WindowSystems.DL.SQL
         {
             if (func != null)
             {
-                var allMaps = _context.Location.ToList();
+                var allLocations = _context.Location.ToList();
 
-                var dbMap = allMaps.FirstOrDefault(m => func(m.LocationConverter(m)));
+                var dbMap = allLocations.FirstOrDefault(m => func(m.LocationConverter(m)));
                 if (dbMap != null)
                 {
                     return dbMap.id;

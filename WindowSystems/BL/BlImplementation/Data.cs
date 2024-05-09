@@ -35,6 +35,9 @@ namespace WindowSystems.BL.BlImplementation
                 dal.weather.Delete(weather);
                 dal.map.Delete(map);
 
+                if(id  != 0)
+                    this.Delete(0);
+
                 return true;
             }
             catch (Exception)
@@ -79,10 +82,10 @@ namespace WindowSystems.BL.BlImplementation
 
         public BO.Data GetData(string address, int zoom, int id = -1)
         {
-            int newId = 0;
+            int newId = 1;
             if (id == -1)
             {
-                newId = dal.map.ReadAll().Count();
+                newId = dal.map.ReadAll().Count() + 1;
             }
             else
             {
@@ -92,7 +95,7 @@ namespace WindowSystems.BL.BlImplementation
             var loc = dal.location.Read(new DL.DO.Location(newId, address));
 
 
-            DL.DO.Location DOlocation = new DL.DO.Location(loc.Result.id, loc.Result.Address, loc.Result.Latitude, loc.Result.Latitude);
+            DL.DO.Location DOlocation = new DL.DO.Location(loc.Result.id, loc.Result.Address, loc.Result.Latitude, loc.Result.Longitude);
 
 
             var DOweather = dal.weather.Read(new DL.DO.Weather(DOlocation));
@@ -102,7 +105,7 @@ namespace WindowSystems.BL.BlImplementation
             {
                 Address = loc.Result.Address,
                 Latitude = loc.Result.Latitude,
-                Longitude = loc.Result.Latitude 
+                Longitude = loc.Result.Longitude 
             };
 
             BO.Weather weather = new BO.Weather
@@ -154,7 +157,7 @@ namespace WindowSystems.BL.BlImplementation
             }
 
             var location = dal.location.Read(new DL.DO.Location(-1, address));
-            if (location.Result.Latitude != 0 && location.Result.Latitude != 0)
+            if (location.Result.Latitude < 1000 && location.Result.Latitude < 1000)
             {
                 return true;
             }
