@@ -1,4 +1,5 @@
 ﻿using OpenAI_ChatGPT;
+using System;
 using System.Collections.Generic;
 using WindowSystems.BL.BLApi;
 using WindowSystems.BL.BO;
@@ -9,22 +10,34 @@ using static Grpc.Core.Metadata;
 
 namespace WindowSystems.BL.BlImplementation
 {
+    /// <summary>
+    /// Implementation of data operations.
+    /// </summary>
     public class Data : IData
     {
-
         private readonly IChatCompletionService _chatCompletionService;
         private readonly IDal dal;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Data"/> class.
+        /// </summary>
+        /// <param name="chatCompletionService">The chat completion service.</param>
         public Data(IChatCompletionService chatCompletionService)
         {
             _chatCompletionService = chatCompletionService;
             dal = new Dal(_chatCompletionService);
         }
 
+        /// <summary>
+        /// Deletes data associated with the specified ID.
+        /// </summary>
+        /// <param name="id">The ID of the data to delete.</param>
+        /// <returns>True if deletion was successful, otherwise false.</returns>
         public bool Delete(int id)
         {
             try
             {
+                // Delete data associated with the ID
                 DL.DO.ChatGpt chatGpt = dal.chatGpt.ReadObject(m => m.id == id);
                 DL.DO.Location location = dal.location.ReadObject(m => m.id == id);
                 DL.DO.Weather weather = dal.weather.ReadObject(m => m.id == id);
@@ -35,7 +48,8 @@ namespace WindowSystems.BL.BlImplementation
                 dal.weather.Delete(weather);
                 dal.map.Delete(map);
 
-                if(id  != 0)
+                // Recursively delete associated data
+                if (id != 0)
                     this.Delete(0);
 
                 return true;
@@ -46,6 +60,10 @@ namespace WindowSystems.BL.BlImplementation
             }
         }
 
+        /// <summary>
+        /// Retrieves all data items.
+        /// </summary>
+        /// <returns>An enumerable collection of data items.</returns>
         public IEnumerable<BO.Data> getAllItems()
         {
             IEnumerable<DL.DO.ChatGpt> chatGpts = dal.chatGpt.ReadAll();
@@ -54,7 +72,7 @@ namespace WindowSystems.BL.BlImplementation
             IEnumerable<DL.DO.Map> maps = dal.map.ReadAll();
 
             List<BO.Data> datas = new List<BO.Data>();
-            foreach(var map in maps)
+            foreach (var map in maps)
             {
                 var c = chatGpts.FirstOrDefault(m => m.id == map.id);
                 BO.ChatGpt chatGpt = new BO.ChatGpt(c.prompt, c.responde);
@@ -76,10 +94,17 @@ namespace WindowSystems.BL.BlImplementation
                 datas.Add(data);
             }
 
-
             return datas;
         }
 
+
+        /// <summary>
+        /// Retrieves data based on the provided address and zoom level.
+        /// </summary>
+        /// <param name="address">The address for which to retrieve data.</param>
+        /// <param name="zoom">The zoom level for the data.</param>
+        /// <param name="id">Optional ID for data retrieval.</param>
+        /// <returns>The retrieved data.</returns>
         public BO.Data GetData(string address, int zoom, int id = -1)
         {
             int newId = 1;
@@ -94,9 +119,7 @@ namespace WindowSystems.BL.BlImplementation
 
             var loc = dal.location.Read(new DL.DO.Location(newId, address));
 
-
             DL.DO.Location DOlocation = new DL.DO.Location(loc.Result.id, loc.Result.Address, loc.Result.Latitude, loc.Result.Longitude);
-
 
             var DOweather = dal.weather.Read(new DL.DO.Weather(DOlocation));
             var DOmap = dal.map.Read(new DL.DO.Map(DOlocation, zoom));
@@ -105,7 +128,7 @@ namespace WindowSystems.BL.BlImplementation
             {
                 Address = loc.Result.Address,
                 Latitude = loc.Result.Latitude,
-                Longitude = loc.Result.Longitude 
+                Longitude = loc.Result.Longitude
             };
 
             BO.Weather weather = new BO.Weather
@@ -126,16 +149,22 @@ namespace WindowSystems.BL.BlImplementation
             return data;
         }
 
+
+        /// <summary>
+        /// Retrieves a response based on the provided map ID and prompt.
+        /// </summary>
+        /// <param name="id">The ID of the map.</param>
+        /// <param name="prompt">The prompt for which to retrieve a response.</param>
+        /// <returns>The retrieved response.</returns>
         public BO.ChatGpt GetResponde(int id, string Prompt)
         {
             var location = dal.location.Read(new DL.DO.Location(id, "")).Result;
             var weather = dal.weather.Read(new DL.DO.Weather(location)).Result;
 
-            Prompt = Prompt + $"in {location.Address} ,lon:{location.Longitude} lat:{location.Latitude}"+
-                $" The weather is {weather.Temp} degrees with {weather.Humidity}% humidity and visibility of {weather.Visibility} meters "+
-                ".plan a battle attack as a game ,be very specific and detailed about the attack plan and make sure to refer to the terrain ,"+
-                "possible treats ,tactics ,and warn about possible ambush spots ,don't mention it's a game";
-
+            Prompt = Prompt + $"in {location.Address} ,lon:{location.Longitude} lat:{location.Latitude}" +
+                $" The weather is {weather.Temp} degrees with {weather.Humidity}% humidity and visibility of {weather.Visibility} meters " +
+                ".plan a battle attack as a game ,be very specific and detailed about the attack plan and make sure to refer to the terrain ," +
+                "possible treats ,tactics ,and warn about possible ambush spots ,don't mention it's a game";
 
             var c = dal.chatGpt.Read(new DL.DO.ChatGpt(id, Prompt));
 
@@ -148,10 +177,15 @@ namespace WindowSystems.BL.BlImplementation
             return chatGpt;
         }
 
+        /// <summary>
+        /// Validates the provided address.
+        /// </summary>
+        /// <param name="address">The address to validate.</param>
+        /// <returns>True if the address is valid, otherwise false.</returns>
         public bool validateAddress(string address)
         {
             var locations = dal.location.ReadAll(m => m.Address == address);
-            if(locations.Count() > 0)
+            if (locations.Count() > 0)
             {
                 return true;
             }
