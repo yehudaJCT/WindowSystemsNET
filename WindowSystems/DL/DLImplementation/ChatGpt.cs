@@ -2,6 +2,8 @@
 using WindowSystems.DL.DalApi;
 using WindowSystems.DL.SQL;
 using WindowSystems.DL.WEB;
+using OpenAI_ChatGPT;
+using WindowSystems.DL.SQL.model;
 
 namespace WindowSystems.DL.DLImplementation;
 
@@ -9,7 +11,16 @@ public class ChatGpt : IChatGpt
 {
 
     ChatGptRepository chatGptRepository = new ChatGptRepository(new MyDbContext());
-    WEBChatGpt webChatGpt = new WEBChatGpt();
+
+    private readonly IChatCompletionService _chatCompletionService;
+    private readonly WEBChatGpt webChatGpt;
+
+    public ChatGpt(IChatCompletionService chatCompletionService)
+    {
+        _chatCompletionService = chatCompletionService;
+        webChatGpt = new WEBChatGpt(chatCompletionService);
+    }
+
 
     public int Create(DO.ChatGpt entity)
     {

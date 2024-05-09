@@ -1,6 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Google.Api;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using OpenAI_ChatGPT;
+using WindowSystems.BL.BLApi;
+using WindowSystems.DL.DalApi;
+using WindowSystems.BL.BlImplementation;
+using WindowSystems.DL.DLImplementation;
 
 var builder = WebApplication.CreateBuilder(args);
 

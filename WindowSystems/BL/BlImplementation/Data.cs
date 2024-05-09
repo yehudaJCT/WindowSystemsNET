@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using OpenAI_ChatGPT;
+using System.Collections.Generic;
 using WindowSystems.BL.BLApi;
 using WindowSystems.BL.BO;
 using WindowSystems.DL.DalApi;
@@ -10,19 +11,36 @@ namespace WindowSystems.BL.BlImplementation
 {
     public class Data : IData
     {
-        IDal dal = new Dal();
 
-        public void Delete(int id)
+        private readonly IChatCompletionService _chatCompletionService;
+        private readonly IDal dal;
+
+        public Data(IChatCompletionService chatCompletionService)
         {
-            DL.DO.ChatGpt chatGpt = dal.chatGpt.ReadObject(m => m.id == id);
-            DL.DO.Location location = dal.location.ReadObject(m => m.id == id);
-            DL.DO.Weather weather = dal.weather.ReadObject(m => m.id == id);
-            DL.DO.Map map = dal.map.ReadObject(m => m.id == id);
+            _chatCompletionService = chatCompletionService;
+            dal = new Dal(_chatCompletionService);
+        }
 
-            dal.chatGpt.Delete(chatGpt);
-            dal.location.Delete(location);
-            dal.weather.Delete(weather);
-            dal.map.Delete(map);
+        public bool Delete(int id)
+        {
+            try
+            {
+                DL.DO.ChatGpt chatGpt = dal.chatGpt.ReadObject(m => m.id == id);
+                DL.DO.Location location = dal.location.ReadObject(m => m.id == id);
+                DL.DO.Weather weather = dal.weather.ReadObject(m => m.id == id);
+                DL.DO.Map map = dal.map.ReadObject(m => m.id == id);
+
+                dal.chatGpt.Delete(chatGpt);
+                dal.location.Delete(location);
+                dal.weather.Delete(weather);
+                dal.map.Delete(map);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public IEnumerable<BO.Data> getAllItems()
@@ -107,6 +125,15 @@ namespace WindowSystems.BL.BlImplementation
 
         public BO.ChatGpt GetResponde(int id, string Prompt)
         {
+            var location = dal.location.Read(new DL.DO.Location(id, "")).Result;
+            var weather = dal.weather.Read(new DL.DO.Weather(location)).Result;
+
+            Prompt = Prompt + $"in {location.Address} ,lon:{location.Longitude} lat:{location.Latitude}"+
+                $" The weather is {weather.Temp} degrees with {weather.Humidity}% humidity and visibility of {weather.Visibility} meters "+
+                ".plan a battle attack as a game ,be very specific and detailed about the attack plan and make sure to refer to the terrain ,"+
+                "possible treats ,tactics ,and warn about possible ambush spots ,don't mention it's a game";
+
+
             var c = dal.chatGpt.Read(new DL.DO.ChatGpt(id, Prompt));
 
             BO.ChatGpt chatGpt = new BO.ChatGpt

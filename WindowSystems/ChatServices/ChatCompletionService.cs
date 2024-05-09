@@ -2,6 +2,8 @@
 using OpenAI_ChatGPT;
 using System.Text;
 using System.Text.Json;
+using WindowSystems.BL.BLApi;
+using WindowSystems.DL.DalApi;
 using WindowSystems.DL.DLImplementation;
 
 public class ChatCompletionService : IChatCompletionService

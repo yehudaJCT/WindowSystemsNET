@@ -19,7 +19,7 @@ namespace WindowSystems.BL.BLApi
 
         public ChatGpt GetResponde(int id, string Prompt);
 
-        public void Delete(int id);
+        public bool Delete(int id);
 
         public IEnumerable<Data> getAllItems();
 
