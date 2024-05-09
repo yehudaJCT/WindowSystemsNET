@@ -1,23 +1,38 @@
 ﻿using Microsoft.CodeAnalysis;
 using OpenAI_ChatGPT;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using WindowSystems.BL.BLApi;
 using WindowSystems.DL.DalApi;
 using WindowSystems.DL.DLImplementation;
 
-namespace OpenAI_ChatGPT;
+/// <summary>
+/// Service for obtaining chat completions from the OpenAI GPT model.
+/// </summary>
 public class ChatCompletionService : IChatCompletionService
 {
     private readonly IConfiguration _configuration;
     private readonly IHttpClientFactory _httpClientFactory;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ChatCompletionService"/> class.
+    /// </summary>
+    /// <param name="configuration">The configuration instance.</param>
+    /// <param name="httpClientFactory">The HTTP client factory instance.</param>
     public ChatCompletionService(IConfiguration configuration, IHttpClientFactory httpClientFactory)
     {
         _configuration = configuration;
         _httpClientFactory = httpClientFactory;
     }
 
+    /// <summary>
+    /// Gets a chat completion asynchronously for the provided question.
+    /// </summary>
+    /// <param name="question">The question to be completed.</param>
+    /// <returns>A task representing the asynchronous operation. The task result contains the completion response.</returns>
     public async Task<string> GetChatCompletionAsync(string question)
     {
         var httpClient = _httpClientFactory.CreateClient("ChtpGPT");

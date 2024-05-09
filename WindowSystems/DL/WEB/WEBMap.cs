@@ -1,14 +1,21 @@
 ﻿using Newtonsoft.Json.Linq;
-using System.Drawing;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 using WindowSystems.DL.DO;
 
-
-namespace WindowSystems.DL.WEB;
-
+/// <summary>
+/// Provides functionality to read map information from a web service.
+/// </summary>
 public class WEBMap
 {
     private static readonly HttpClient client = new HttpClient();
 
+    /// <summary>
+    /// Reads map information asynchronously from a web service.
+    /// </summary>
+    /// <param name="entity">The map entity containing location and zoom details.</param>
+    /// <returns>A task representing the asynchronous operation. The task result contains the read map entity.</returns>
     public async Task<Map> Read(Map entity)
     {
         try
@@ -22,8 +29,6 @@ public class WEBMap
                 byte[] mapBytes = await response.Content.ReadAsByteArrayAsync();
 
                 Map map = new Map(entity.Location, map_url, entity.zoom);
-
-
                 return map;
             }
             else

@@ -1,14 +1,22 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 using WindowSystems.DL.DO;
 
-namespace WindowSystems.DL.WEB;
-
-
+/// <summary>
+/// Provides functionality to read weather information from a web service.
+/// </summary>
 public class WEBWeather
 {
     private static readonly HttpClient client = new HttpClient();
 
+    /// <summary>
+    /// Reads weather information asynchronously from a web service.
+    /// </summary>
+    /// <param name="entity">The weather entity containing location details.</param>
+    /// <returns>A task representing the asynchronous operation. The task result contains the read weather entity.</returns>
     public async Task<Weather> Read(Weather entity)
     {
         try
@@ -19,7 +27,7 @@ public class WEBWeather
 
             HttpResponseMessage response = await client.GetAsync(url);
 
-            if(!response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
                 return new Weather();
             }
@@ -30,7 +38,6 @@ public class WEBWeather
             dynamic data = JsonConvert.DeserializeObject(responseBody);
 
             Weather weather = new Weather(entity.Location, DateTime.Parse((string)data.list[0].dt_txt), (double)data.list[0].main.temp_max, (int)data.list[0].main.humidity, (int)data.list[0].visibility);
-
 
             return weather;
         }
