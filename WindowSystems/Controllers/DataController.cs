@@ -21,34 +21,34 @@ public class DataController : ControllerBase
     public IActionResult ValidateAddress(string address)
     {
         var isValid = bl.data.validateAddress(address);
-        return Ok(isValid);
+        return Ok(new { isValid = isValid });
     }
 
     [HttpGet("GetData")]
     public IActionResult GetData(string address, int zoom)
     {
         var data = bl.data.GetData(address, zoom);
-        return Ok(data);
+        return Ok(new { data = data });
     }
 
     [HttpGet("GetResponse")]
     public IActionResult GetResponse(int id_map, string prompt)
     {
         var response = bl.data.GetResponde(id_map, prompt);
-        return Ok(response);
+        return Ok(new { response = response });
     }
 
     [HttpGet("Delete")]
     public IActionResult Delete(int id_map)
     {
         var isDeleted = bl.data.Delete(id_map);
-        return Ok(isDeleted);
+        return Ok(new { isDeleted = isDeleted });
     }
 
     [HttpGet("GetAllItems")]
     public IActionResult GetAllItems()
     {
         var items = bl.data.getAllItems();
-        return Ok(items);
+        return Ok(new { items = items });
     }
 }
