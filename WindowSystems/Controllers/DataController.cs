@@ -28,27 +28,27 @@ public class DataController : ControllerBase
     public IActionResult GetData(string address, int zoom)
     {
         var data = bl.data.GetData(address, zoom);
-        return Ok(new { data = data });
+        return Ok(data);
     }
 
     [HttpGet("GetResponse")]
     public IActionResult GetResponse(int id_map, string prompt)
     {
         var response = bl.data.GetResponde(id_map, prompt);
-        return Ok(new { response = response });
+        return Ok(response);
     }
 
     [HttpGet("Delete")]
     public IActionResult Delete(int id_map)
     {
         var isDeleted = bl.data.Delete(id_map);
-        return Ok(new { isDeleted = isDeleted });
+        return Ok(isDeleted);
     }
 
     [HttpGet("GetAllItems")]
     public IActionResult GetAllItems()
     {
         var items = bl.data.getAllItems();
-        return Ok(new { items = items });
+        return Ok(items);
     }
 }
