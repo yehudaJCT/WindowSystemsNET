@@ -20,7 +20,15 @@ public class DataController : ControllerBase
     [HttpGet("IsALocation")]
     public IActionResult ValidateAddress(string address)
     {
-        var isValid = bl.data.validateAddress(address);
+        bool isValid = bl.data.validateAddress(address);
+        //if (!isValid)
+        //{
+        //    //A
+        //}
+        //else
+        //{
+        //    //B
+        //}
         return Ok(isValid);
     }
 

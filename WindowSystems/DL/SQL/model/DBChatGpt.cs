@@ -7,8 +7,14 @@ public class DBChatGpt
 {
     [Key]
     public int id { get; set; }
-    public string prompt;
-    public string responde;
+
+
+    [StringLength(255)]
+    public string prompt { get; set; }
+
+
+    [StringLength(255)]
+    public string responde { get; set; }
 
     DBChatGpt()
     {

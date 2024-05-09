@@ -10,7 +10,9 @@ public class DBMap
 {
     [Key]
     public int id { get; set; }
-    public string URL;
+
+    [StringLength(255)] 
+    public string URL { get; set; }
     public int zoom { get; set; }
 
     DBMap()

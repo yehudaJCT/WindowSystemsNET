@@ -6,6 +6,7 @@ using WindowSystems.BL.BLApi;
 using WindowSystems.DL.DalApi;
 using WindowSystems.DL.DLImplementation;
 
+namespace OpenAI_ChatGPT;
 public class ChatCompletionService : IChatCompletionService
 {
     private readonly IConfiguration _configuration;
