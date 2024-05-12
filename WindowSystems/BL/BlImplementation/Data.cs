@@ -158,10 +158,10 @@ namespace WindowSystems.BL.BlImplementation
         /// <returns>The retrieved response.</returns>
         public BO.ChatGpt GetResponde(int id, string Prompt)
         {
-            var location = dal.location.Read(new DL.DO.Location(id, "")).Result;
+            var location = dal.location.Read(new DL.DO.Location(id, Prompt)).Result;
             var weather = dal.weather.Read(new DL.DO.Weather(location)).Result;
 
-            Prompt = Prompt + $"in {location.Address} ,lon:{location.Longitude} lat:{location.Latitude}" +
+            Prompt = Prompt + $" from {location.Address} ,lon:{location.Longitude} lat:{location.Latitude}" +
                 $" The weather is {weather.Temp} degrees with {weather.Humidity}% humidity and visibility of {weather.Visibility} meters " +
                 ".plan a battle attack as a game ,be very specific and detailed about the attack plan and make sure to refer to the terrain ," +
                 "possible treats ,tactics ,and warn about possible ambush spots ,don't mention it's a game";

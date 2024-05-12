@@ -52,7 +52,7 @@ namespace WindowSystems.DL.DLImplementation
         /// <returns>The read chat GPT entity.</returns>
         public async Task<DO.ChatGpt> Read(DO.ChatGpt entity)
         {
-            int id = chatGptRepository.ObjectToId(m => m.id == entity.id);
+            int id = chatGptRepository.ObjectToId(m => m.id == entity.id && m.prompt == entity.prompt);
             if (id == -1)
             {
                 entity = await webChatGpt.Read(entity);

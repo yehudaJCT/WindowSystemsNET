@@ -71,7 +71,7 @@ public class DataController : ControllerBase
     public IActionResult Delete(int id_map)
     {
         var isDeleted = bl.data.Delete(id_map);
-        return Ok(isDeleted);
+        return Ok(new { isDeleted = isDeleted });
     }
 
     /// <summary>
