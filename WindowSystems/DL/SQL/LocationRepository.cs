@@ -28,21 +28,29 @@ namespace WindowSystems.DL.SQL
         /// <returns>The ID of the created entity.</returns>
         public int Create(DO.Location entity)
         {
-            var existingMap = _context.Location.FirstOrDefault(m => m.id == entity.id);
-
-            if (existingMap == null)
+            try
             {
-                // If no map exists at the specified ID, create a new one
-                var dbMap = new DBLocation(entity);
-                _context.Location.Add(dbMap);
-                _context.SaveChanges();
-            }
-            else
-            {
-                this.Update(entity);
-            }
+                var existingMap = _context.Location.FirstOrDefault(m => m.Address == entity.Address);
+                int id = -1;
 
-            return entity.id;
+                if (existingMap == null)
+                {
+                    var dbMap = new DBLocation(entity);
+                    _context.Location.Add(dbMap);
+                    id = _context.SaveChanges();
+                }
+                else
+                {
+                    this.Update(entity);
+                }
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while creating Location entity.", ex);
+            }
         }
 
         /// <summary>
@@ -52,12 +60,20 @@ namespace WindowSystems.DL.SQL
         /// <returns>The read Location entity.</returns>
         public DO.Location Read(int id)
         {
-            var dbMap = _context.Location.FirstOrDefault(m => m.id == id);
-            if (dbMap != null)
+            try
             {
-                return dbMap.LocationConverter(dbMap);
+                var dbMap = _context.Location.FirstOrDefault(m => m.id == id);
+                if (dbMap != null)
+                {
+                    return dbMap.LocationConverter(dbMap);
+                }
+                return new DO.Location();
             }
-            return new DO.Location();
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while reading Location entity.", ex);
+            }
         }
 
         /// <summary>
@@ -66,13 +82,21 @@ namespace WindowSystems.DL.SQL
         /// <param name="entity">The Location entity to update.</param>
         public void Update(DO.Location entity)
         {
-            var dbMap = _context.Location.FirstOrDefault(m => m.id == entity.id);
-            if (dbMap != null)
+            try
             {
-                dbMap.Address = entity.Address;
-                dbMap.Latitude = entity.Latitude;
-                dbMap.Longitude = entity.Longitude;
-                _context.SaveChanges();
+                var dbMap = _context.Location.FirstOrDefault(m => m.Address == entity.Address);
+                if (dbMap != null)
+                {
+                    dbMap.Address = entity.Address;
+                    dbMap.Latitude = entity.Latitude;
+                    dbMap.Longitude = entity.Longitude;
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while updating Location entity.", ex);
             }
         }
 
@@ -82,11 +106,19 @@ namespace WindowSystems.DL.SQL
         /// <param name="id">The ID of the Location entity to delete.</param>
         public void Delete(int id)
         {
-            var dbMap = _context.Location.FirstOrDefault(m => m.id == id);
-            if (dbMap != null)
+            try
             {
-                _context.Location.Remove(dbMap);
-                _context.SaveChanges();
+                var dbMap = _context.Location.FirstOrDefault(m => m.id == id);
+                if (dbMap != null)
+                {
+                    _context.Location.Remove(dbMap);
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while deleting Location entity.", ex);
             }
         }
 
@@ -97,18 +129,26 @@ namespace WindowSystems.DL.SQL
         /// <returns>An enumerable collection of Location entities.</returns>
         public IEnumerable<DO.Location> ReadAll(Func<DO.Location, bool>? func = null)
         {
-            IEnumerable<DBLocation> query = _context.Location;
-
-            if (query.Count() <= 0)
+            try
             {
-                return Enumerable.Empty<DO.Location>();
-            }
+                IEnumerable<DBLocation> query = _context.Location;
 
-            if (func != null)
-            {
-                query = query.Where(m => func.Invoke(m.LocationConverter(m)));
+                if (query.Count() <= 0)
+                {
+                    return Enumerable.Empty<DO.Location>();
+                }
+
+                if (func != null)
+                {
+                    query = query.Where(m => func.Invoke(m.LocationConverter(m)));
+                }
+                return query.Select(m => m.LocationConverter(m));
             }
-            return query.Select(m => m.LocationConverter(m));
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while reading all Location entities.", ex);
+            }
         }
 
         /// <summary>
@@ -118,17 +158,25 @@ namespace WindowSystems.DL.SQL
         /// <returns>The read Location entity.</returns>
         public DO.Location ReadObject(Func<DO.Location, bool>? func)
         {
-            if (func != null)
+            try
             {
-                var allMaps = _context.Location.ToList();
-
-                var dbMap = allMaps.FirstOrDefault(m => func(m.LocationConverter(m)));
-                if (dbMap != null)
+                if (func != null)
                 {
-                    return dbMap.LocationConverter(dbMap);
+                    var allMaps = _context.Location.ToList();
+
+                    var dbMap = allMaps.FirstOrDefault(m => func(m.LocationConverter(m)));
+                    if (dbMap != null)
+                    {
+                        return dbMap.LocationConverter(dbMap);
+                    }
                 }
+                return new DO.Location();
             }
-            return new DO.Location();
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while reading Location entity based on predicate function.", ex);
+            }
         }
 
         /// <summary>
@@ -138,17 +186,25 @@ namespace WindowSystems.DL.SQL
         /// <returns>The ID of the matching entity.</returns>
         public int ObjectToId(Func<DO.Location, bool>? func)
         {
-            if (func != null)
+            try
             {
-                var allLocations = _context.Location.ToList();
-
-                var dbMap = allLocations.FirstOrDefault(m => func(m.LocationConverter(m)));
-                if (dbMap != null)
+                if (func != null)
                 {
-                    return dbMap.id;
+                    var allLocations = _context.Location.ToList();
+
+                    var dbMap = allLocations.FirstOrDefault(m => func(m.LocationConverter(m)));
+                    if (dbMap != null)
+                    {
+                        return dbMap.id;
+                    }
                 }
+                return -1;
             }
-            return -1;
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while converting a predicate function to an ID.", ex);
+            }
         }
     }
 }

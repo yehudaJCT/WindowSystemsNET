@@ -12,8 +12,8 @@ using WindowSystems.DL.SQL;
 namespace WindowSystems.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240512090348_Location")]
-    partial class Location
+    [Migration("20240512135857_MyDb")]
+    partial class MyDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

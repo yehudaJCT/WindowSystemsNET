@@ -20,7 +20,7 @@ public class DBWeather
 
     public DBWeather(Weather weather)
     {
-        this.id = weather.id;
+        //this.id = weather.id;
         this.Date = weather.Date;
         this.Temp = weather.Temp;
         this.Humidity = weather.Humidity;

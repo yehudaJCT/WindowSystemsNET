@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WindowSystems.Migrations
 {
     /// <inheritdoc />
-    public partial class Location : Migration
+    public partial class MyDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

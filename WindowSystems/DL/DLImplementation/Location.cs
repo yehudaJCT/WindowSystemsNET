@@ -30,7 +30,7 @@ namespace WindowSystems.DL.DLImplementation
         /// <param name="entity">The location entity to delete.</param>
         public void Delete(DO.Location entity)
         {
-            locationRepository.Delete(locationRepository.ObjectToId(m => m.id == entity.id));
+            locationRepository.Delete(locationRepository.ObjectToId(m => m.Address == entity.Address));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace WindowSystems.DL.DLImplementation
         /// <returns>The read location entity.</returns>
         public async Task<DO.Location> Read(DO.Location entity)
         {
-            int id = locationRepository.ObjectToId(m => m.id == entity.id);
+            int id = locationRepository.ObjectToId(m => m.Address == entity.Address);
             if (id == -1)
             {
                 entity = await webLocation.Read(entity);
@@ -79,7 +79,6 @@ namespace WindowSystems.DL.DLImplementation
         /// <param name="entity">The location entity to update.</param>
         public void Update(DO.Location entity)
         {
-            int id = locationRepository.ObjectToId(m => m.id == entity.id);
             locationRepository.Update(entity);
         }
     }

@@ -30,21 +30,29 @@ namespace WindowSystems.DL.SQL
         /// <returns>The ID of the created entity.</returns>
         public int Create(DO.Map entity)
         {
-            var existingMap = _context.Map.FirstOrDefault(m => m.id == entity.id);
-
-            if (existingMap == null)
+            try
             {
-                // If no map exists at the specified ID, create a new one
-                var dbMap = new DBMap(entity);
-                _context.Map.Add(dbMap);
-                _context.SaveChanges();
-            }
-            else
-            {
-                this.Update(entity);
-            }
+                var existingMap = _context.Map.FirstOrDefault(m => m.URL == entity.URL);
 
-            return entity.id;
+                int id = -1;
+                if (existingMap == null)
+                {
+                    var dbMap = new DBMap(entity);
+                    _context.Map.Add(dbMap);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    this.Update(entity);
+                }
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while creating Map entity.", ex);
+            }
         }
 
         /// <summary>
@@ -54,14 +62,22 @@ namespace WindowSystems.DL.SQL
         /// <returns>The read Map entity.</returns>
         public DO.Map Read(int id)
         {
-            var dbMap = _context.Map.FirstOrDefault(m => m.id == id);
-            if (dbMap != null)
+            try
             {
-                LocationRepository locationRepository = new LocationRepository(_context);
-                DO.Location location = locationRepository.Read(id);
-                return dbMap.MapConverter(dbMap, location);
+                var dbMap = _context.Map.FirstOrDefault(m => m.id == id);
+                if (dbMap != null)
+                {
+                    LocationRepository locationRepository = new LocationRepository(_context);
+                    DO.Location location = locationRepository.Read(id);
+                    return dbMap.MapConverter(dbMap, location);
+                }
+                return new DO.Map();
             }
-            return new DO.Map();
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while reading Map entity.", ex);
+            }
         }
 
         /// <summary>
@@ -70,12 +86,20 @@ namespace WindowSystems.DL.SQL
         /// <param name="entity">The Map entity to update.</param>
         public void Update(DO.Map entity)
         {
-            var dbMap = _context.Map.FirstOrDefault(m => m.id == entity.id);
-            if (dbMap != null)
+            try
             {
-                dbMap.URL = entity.URL;
-                dbMap.zoom = entity.zoom;
-                _context.SaveChanges();
+                var dbMap = _context.Map.FirstOrDefault(m => m.URL == entity.URL);
+                if (dbMap != null)
+                {
+                    dbMap.URL = entity.URL;
+                    dbMap.zoom = entity.zoom;
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while updating Map entity.", ex);
             }
         }
 
@@ -85,11 +109,19 @@ namespace WindowSystems.DL.SQL
         /// <param name="id">The ID of the Map entity to delete.</param>
         public void Delete(int id)
         {
-            var dbMap = _context.Map.FirstOrDefault(m => m.id == id);
-            if (dbMap != null)
+            try
             {
-                _context.Map.Remove(dbMap);
-                _context.SaveChanges();
+                var dbMap = _context.Map.FirstOrDefault(m => m.id == id);
+                if (dbMap != null)
+                {
+                    _context.Map.Remove(dbMap);
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while deleting Map entity.", ex);
             }
         }
 
@@ -100,19 +132,27 @@ namespace WindowSystems.DL.SQL
         /// <returns>An enumerable collection of Map entities.</returns>
         public IEnumerable<DO.Map> ReadAll(Func<DO.Map, bool>? func = null)
         {
-            IEnumerable<DBMap> query = _context.Map;
-
-            if (query.Count() <= 0)
+            try
             {
-                return Enumerable.Empty<DO.Map>();
-            }
+                IEnumerable<DBMap> query = _context.Map;
 
-            LocationRepository locationRepository = new LocationRepository(_context);
-            if (func != null)
-            {
-                query = query.Where(m => func.Invoke(m.MapConverter(m, locationRepository.Read(m.id))));
+                if (query.Count() <= 0)
+                {
+                    return Enumerable.Empty<DO.Map>();
+                }
+
+                LocationRepository locationRepository = new LocationRepository(_context);
+                if (func != null)
+                {
+                    query = query.Where(m => func.Invoke(m.MapConverter(m, locationRepository.Read(m.id))));
+                }
+                return query.Select(m => m.MapConverter(m, locationRepository.Read(m.id)));
             }
-            return query.Select(m => m.MapConverter(m, locationRepository.Read(m.id)));
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while reading all Map entities.", ex);
+            }
         }
 
         /// <summary>
@@ -122,18 +162,26 @@ namespace WindowSystems.DL.SQL
         /// <returns>The read Map entity.</returns>
         public DO.Map ReadObject(Func<DO.Map, bool>? func)
         {
-            if (func != null)
+            try
             {
-                var allMaps = _context.Map.ToList();
-
-                LocationRepository locationRepository = new LocationRepository(_context);
-                var dbMap = allMaps.FirstOrDefault(m => func(m.MapConverter(m, locationRepository.Read(m.id))));
-                if (dbMap != null)
+                if (func != null)
                 {
-                    return dbMap.MapConverter(dbMap, locationRepository.Read(dbMap.id));
+                    var allMaps = _context.Map.ToList();
+
+                    LocationRepository locationRepository = new LocationRepository(_context);
+                    var dbMap = allMaps.FirstOrDefault(m => func(m.MapConverter(m, locationRepository.Read(m.id))));
+                    if (dbMap != null)
+                    {
+                        return dbMap.MapConverter(dbMap, locationRepository.Read(dbMap.id));
+                    }
                 }
+                return new DO.Map();
             }
-            return new DO.Map();
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while reading Map entity based on predicate function.", ex);
+            }
         }
 
         /// <summary>
@@ -143,18 +191,26 @@ namespace WindowSystems.DL.SQL
         /// <returns>The ID of the matching entity.</returns>
         public int ObjectToId(Func<DO.Map, bool>? func)
         {
-            if (func != null)
+            try
             {
-                var allMaps = _context.Map.ToList();
-
-                LocationRepository locationRepository = new LocationRepository(_context);
-                var dbMap = allMaps.FirstOrDefault(m => func(m.MapConverter(m, locationRepository.Read(m.id))));
-                if (dbMap != null)
+                if (func != null)
                 {
-                    return dbMap.id;
+                    var allMaps = _context.Map.ToList();
+
+                    LocationRepository locationRepository = new LocationRepository(_context);
+                    var dbMap = allMaps.FirstOrDefault(m => func(m.MapConverter(m, locationRepository.Read(m.id))));
+                    if (dbMap != null)
+                    {
+                        return dbMap.id;
+                    }
                 }
+                return -1;
             }
-            return -1;
+            catch (Exception ex)
+            {
+                // Log or handle the exception here
+                throw new Exception("Error occurred while converting a predicate function to an ID.", ex);
+            }
         }
     }
 }

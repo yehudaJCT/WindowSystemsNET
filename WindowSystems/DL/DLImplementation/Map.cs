@@ -30,7 +30,7 @@ namespace WindowSystems.DL.DLImplementation
         /// <param name="entity">The map entity to delete.</param>
         public void Delete(DO.Map entity)
         {
-            mapRepository.Delete(mapRepository.ObjectToId(m => m.id == entity.id));
+            mapRepository.Delete(mapRepository.ObjectToId(m => m.URL == entity.URL));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace WindowSystems.DL.DLImplementation
         /// <returns>The read map entity.</returns>
         public async Task<DO.Map> Read(DO.Map entity)
         {
-            int id = mapRepository.ObjectToId(m => m.id == entity.id);
+            int id = mapRepository.ObjectToId(m => m.URL == entity.URL);
             if (id == -1)
             {
                 entity = await webMap.Read(entity);

@@ -10,6 +10,7 @@ namespace WindowSystems.DL.SQL
 
     public class MyDbContext : DbContext
     {
+        public DbSet<DBlink> link { get; set; }
         public DbSet<DBMap> Map { get; set; }
         public DbSet<DBChatGpt> ChatGpt { get; set; }
         public DbSet<DBLocation> Location { get; set; }
@@ -19,7 +20,7 @@ namespace WindowSystems.DL.SQL
         {
 
             // Configure your connection string here
-            //optionsBuilder.UseSqlServer("Server=localhost;Database=WSDB;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=WSDB;Trusted_Connection=True;TrustServerCertificate=True;");
             //optionsBuilder.UseSqlServer("Server=localhost;Database=WSDB;Trusted_Connection=True;TrustServerCertificate=True;Encrypt=false;MultipleActiveResultSets=True;");
             //optionsBuilder.UseSqlServer("Server=localhost;Database=WSDB;Trusted_Connection=True;");
             // optionsBuilder.UseSqlServer("Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;");
@@ -27,7 +28,7 @@ namespace WindowSystems.DL.SQL
             //"Server=localhost;Database=master;Trusted_Connection=True;"
 
 
-            optionsBuilder.UseInMemoryDatabase("MyDb");
+            //optionsBuilder.UseInMemoryDatabase("MyDb");
         }
 
     }

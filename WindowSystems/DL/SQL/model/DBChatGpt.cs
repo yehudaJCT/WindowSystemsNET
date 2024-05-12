@@ -23,7 +23,7 @@ public class DBChatGpt
 
     public DBChatGpt(ChatGpt chatGpt)
     {
-        this.id = chatGpt.id;
+        //this.id = chatGpt.id;
         this.prompt = chatGpt.prompt;
         this.responde = chatGpt.responde;
 

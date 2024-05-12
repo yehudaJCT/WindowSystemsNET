@@ -30,7 +30,7 @@ namespace WindowSystems.DL.DLImplementation
         /// <param name="entity">The weather entity to delete.</param>
         public void Delete(DO.Weather entity)
         {
-            weatherRepository.Delete(weatherRepository.ObjectToId(m => m.id == entity.id));
+            weatherRepository.Delete(weatherRepository.ObjectToId(m => m == entity.id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace WindowSystems.DL.DLImplementation
         /// <returns>The read weather entity.</returns>
         public async Task<DO.Weather> Read(DO.Weather entity)
         {
-            int id = weatherRepository.ObjectToId(m => m.id == entity.id);
+            int id = weatherRepository.ObjectToId(m => m. == entity.id);
             if (id == -1)
             {
                 entity = await webWeather.Read(entity);

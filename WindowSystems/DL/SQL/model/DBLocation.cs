@@ -21,7 +21,7 @@ public class DBLocation
 
     public DBLocation(Location location)
     {
-        this.id = location.id;
+        //this.id = location.id;
         this.Address = location.Address;
         this.Latitude = location.Latitude;
         this.Longitude = location.Longitude;
@@ -29,7 +29,7 @@ public class DBLocation
 
     public Location LocationConverter(DBLocation Location)
     {
-        Location location = new Location(Location.id, Location.Address, Location.Latitude, Location.Longitude);
+        Location location = new Location(Location.Address, Location.Latitude, Location.Longitude);
         return location;
     }
 

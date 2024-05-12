@@ -22,7 +22,7 @@ public class DBMap
 
     public DBMap(Map map)
     {
-        this.id = map.id;
+        //this.id = map.id;
         this.URL = map.URL;
         this.zoom = map.zoom;
     }
